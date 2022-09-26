@@ -1,0 +1,57 @@
+.container {
+  width: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  background: #ffffff;
+}
+
+.logo {
+  height: 97px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding-left: 34px;
+}
+
+.logo img {
+  width: 152.53px;
+  height: 25.22px;
+}
+
+.count {
+  margin: 15px auto 19px;
+  padding-left: 34px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 2.4000000953674316px;
+  text-align: left;
+  color: #828fa3;
+}
+
+.add_board {
+  color: #635fc7;
+  padding: 14px 32px 15px
+}
+
+.add_board p {
+  display: inline;
+  margin-left: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+
+.toggle_group {
+
+}
+
+.toggler {
+    margin: auto 25px auto 24px;
+    align-items: center;
+}

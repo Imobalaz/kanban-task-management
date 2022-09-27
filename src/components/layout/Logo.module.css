@@ -1,0 +1,12 @@
+.logo {
+  height: 97px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding-left: 34px;
+}
+
+.logo img {
+  width: 152.53px;
+  height: 25.22px;
+}

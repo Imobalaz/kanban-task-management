@@ -1,0 +1,25 @@
+.count {
+  margin: 15px auto 19px;
+  padding-left: 34px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 2.4000000953674316px;
+  text-align: left;
+  color: #828fa3;
+}
+
+.add_board {
+  color: #635fc7;
+  padding: 14px 32px 15px;
+}
+
+.add_board p {
+  display: inline;
+  margin-left: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+}

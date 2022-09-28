@@ -1,9 +1,18 @@
 .logo {
-  height: 97px;
+  height: 100% ;
+  width: 24vw;
   text-align: center;
   display: flex;
   align-items: center;
   padding-left: 34px;
+  border-right: 1px solid var(--light-lines);
+}
+
+.logo.hide_sidenav {
+  border-bottom: 1px solid var(--light-lines);
+  padding-left: 24px;
+  padding-right: 32px;
+  width: fit-content;
 }
 
 .logo img {

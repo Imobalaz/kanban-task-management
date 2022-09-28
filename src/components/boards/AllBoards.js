@@ -16,7 +16,7 @@ const AllBoards = () => {
               fill="currentColor"
             />
           </svg>
-          <p>+Create New Board</p>
+          <p>+ Create New Board</p>
         </div>
       </Fragment>
     );

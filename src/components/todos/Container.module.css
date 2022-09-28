@@ -1,0 +1,38 @@
+.container {
+  min-height: 100%;
+  max-height: fit-content;
+  min-width: 100%;
+  max-width: fit-content;
+  background: #f2f2f2;
+  padding: 24px 24px 50px;
+  display: flex;
+  gap: 24px;
+}
+
+.container.dark {
+  background: var(--very-dark-grey);
+}
+
+.add_column {
+  margin-top: 39px;
+  background: linear-gradient(
+    180deg,
+    #e9effa 0%,
+    rgba(233, 239, 250, 0.5) 100%
+  );
+  border-radius: 6px;
+  width: 280px;
+  min-width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  color: #828fa3;
+}
+
+.add_column.dark {
+  background: linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%);
+}

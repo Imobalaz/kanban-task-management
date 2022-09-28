@@ -1,0 +1,12 @@
+.button {
+  background: var(--main-purple);
+  border-radius: 400px;
+  border: none;
+  font-weight: 700;
+  text-align: left;
+  color: #fff;
+}
+
+.button:hover {
+  background: var(--main-purple-hover);
+}

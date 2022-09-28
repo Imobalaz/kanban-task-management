@@ -6,11 +6,11 @@
   line-height: 15px;
   letter-spacing: 2.4000000953674316px;
   text-align: left;
-  color: #828fa3;
+  color: var(--mid-grey);
 }
 
 .add_board {
-  color: #635fc7;
+  color: var(--main-purple);
   padding: 14px 32px 15px;
 }
 

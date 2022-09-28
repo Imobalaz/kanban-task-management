@@ -17,8 +17,8 @@
 }
 
 .container:hover {
-    background: #ABA4FF;
-    color: #FFF;
+    background: var(--main-purple-hover);
+    color: var(--white);
 }
 
 .container:active {

@@ -1,0 +1,28 @@
+.container {
+  min-width: 280px;
+}
+
+.column_title {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.column_title span {
+  width: 15px;
+  height: 15px;
+  background-color: #49C4E5;
+  display: block;
+  margin-right: 12px;
+  border-radius: 50%;
+}
+
+.column_title p {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 2.4000000953674316px;
+  text-align: left;
+  color: #828FA3;
+}

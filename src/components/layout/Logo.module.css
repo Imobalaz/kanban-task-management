@@ -1,14 +1,19 @@
 .logo {
-  height: 100% ;
-  width: 24vw;
+  height: 11.375vh ;
+  width: 21vw;
   text-align: center;
   display: flex;
   align-items: center;
   padding-left: 34px;
   border-right: 1px solid var(--light-lines);
+  position: fixed;
+  top: 0;
+  left:0;
+  z-index: 10;
+  
 }
 
-.logo.hide_sidenav {
+.logo.no_side_nav {
   border-bottom: 1px solid var(--light-lines);
   padding-left: 24px;
   padding-right: 32px;
@@ -18,4 +23,11 @@
 .logo img {
   width: 152.53px;
   height: 25.22px;
+}
+
+@media only screen and (max-width: 768px) {
+  .logo {
+    width: 34vw;
+    height: 8vh;
+  }
 }

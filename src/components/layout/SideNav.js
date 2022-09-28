@@ -1,6 +1,5 @@
 import classes from './SideNav.module.css'
 import AllBoards from '../boards/AllBoards';
-import Logo from './Logo';
 
 
 const SideNav = () => {

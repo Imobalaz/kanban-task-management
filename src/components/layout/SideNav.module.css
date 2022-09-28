@@ -1,16 +1,17 @@
 .container {
-  width: 19.606vw;
+  width: 21vw;
   display: flex;
   flex-direction: column;
   background: var(--white);
   padding-bottom: 47px;
   border-right: 1px solid var(--light-lines);
-    justify-content: space-between;
-    height: 88.625vh;
-    position: fixed;
-    top: 11.375vh;
-    left: 0;
-    z-index: 10;
+  justify-content: space-between;
+  height: 88.625vh;
+  position: fixed;
+  top: 11.375vh;
+  left: 0;
+  z-index: 10;
+  display: none;
 }
 
 .container.dark {
@@ -37,9 +38,8 @@
 }
 
 .toggler.dark {
-  background: var(--very-dark-grey)
+  background: var(--very-dark-grey);
 }
-
 
 .toggle {
   width: 40px;
@@ -63,8 +63,8 @@
 }
 
 .toggle.dark span {
-    right: 3px;
-    left:auto;
+  right: 3px;
+  left: auto;
 }
 
 .hide_nav {
@@ -80,5 +80,14 @@
   line-height: 19px;
   letter-spacing: 0px;
   text-align: left;
-  color: #828FA3
+  color: #828fa3;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 34vw;
+    top: 8vh;
+    height: 92vh;
+  }
+
 }

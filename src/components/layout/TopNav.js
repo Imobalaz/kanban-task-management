@@ -1,20 +1,12 @@
 import classes from "./TopNav.module.css";
 import Button from "../ui/Button";
-import Logo from "./Logo";
 const TopNav = () => {
   return (
-    <div className={classes.container}>
-      <Logo />
+    <div className={`${classes.container} ${classes.no_side_nav}`}>
       <div className={classes.subcontainer}>
         <p>Platform Launch</p>
         <div className={classes.subcontainer_action}>
-          <Button
-            padding="15px 25px 14px 24px"
-            lineHeight="18.9px"
-            fontSize="15px"
-          >
-            + Add New Task
-          </Button>
+          <Button>+ Add New Task</Button>
           <span>
             <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
               <g fill="#828FA3" fill-rule="evenodd">

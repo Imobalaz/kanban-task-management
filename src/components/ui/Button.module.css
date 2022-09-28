@@ -1,12 +1,29 @@
 .button {
   background: var(--main-purple);
   border-radius: 400px;
+
+  height: 45px;
+  padding: 0 25px; 
   border: none;
   font-weight: 700;
   text-align: left;
   color: #fff;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 18.9px;
+  font-size: 15px;
 }
 
 .button:hover {
   background: var(--main-purple-hover);
+}
+
+@media only screen and (max-width: 768px) {
+  .button {
+    font-size: 12px;
+    padding: 0 17px;
+    height: 36px;
+  }
 }

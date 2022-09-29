@@ -2,7 +2,7 @@ import classes from "./TopNav.module.css";
 import Button from "../ui/Button";
 const TopNav = () => {
   return (
-    <div className={`${classes.container} ${classes.no_side_nav}`}>
+    <div className={`${classes.container}`}>
       <div className={classes.subcontainer}>
         <p>Platform Launch</p>
         <div className={classes.subcontainer_action}>

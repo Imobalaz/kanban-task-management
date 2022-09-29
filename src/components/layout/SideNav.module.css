@@ -11,7 +11,6 @@
   top: 11.375vh;
   left: 0;
   z-index: 10;
-  display: none;
 }
 
 .container.dark {
@@ -83,11 +82,29 @@
   color: #828fa3;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 992px) {
   .container {
     width: 34vw;
     top: 8vh;
     height: 92vh;
   }
+}
 
+@media only screen and (max-width: 600px) {
+  .container {
+    justify-content: flex-start;
+    width: 70.4vw;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 16px;
+    top: 12vh;
+    height: fit-content;
+    padding-bottom: 16px;
+    box-shadow: 0px 10px 20px rgba(54, 78, 126, 0.25);
+    border-radius: 8px;
+  }
+
+  .container.hide {
+    top: -1000%;
+  }
 }

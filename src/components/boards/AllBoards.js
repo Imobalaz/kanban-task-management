@@ -1,14 +1,18 @@
 import { Fragment } from "react";
 import Board from "./Board";
 import classes from './AllBoards.module.css'
+import { useContext } from "react";
+import AppContext from "../../context/context-api";
 
 const AllBoards = () => {
+      const ctx = useContext(AppContext)
+      const {boards} = ctx.data;
+      const boardCount = boards.length;
+      const boardsComponents = boards.map(board => <Board key={board.name} title={board.name} />)
     return (
       <Fragment>
-        <div className={classes.count}>ALL BOARDS (3)</div>
-        <Board title="Platform Launch" />
-        <Board title="Marketing Plan" />
-        <Board title="Roadmap" />
+        <div className={classes.count}>{`ALL BOARDS (${boardCount})`}</div>
+        {boardsComponents}
         <div className={classes.add_board}>
           <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
             <path

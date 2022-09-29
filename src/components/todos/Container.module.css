@@ -3,7 +3,7 @@
   max-height: fit-content;
   min-width: 100%;
   max-width: fit-content;
-  background: #f2f2f2;
+  background: #F4F7FD;
   padding: 24px 24px 50px;
   display: flex;
   gap: 24px;
@@ -35,4 +35,14 @@
 
 .add_column.dark {
   background: linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%);
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    margin: 0;
+    min-width: 100%;
+    min-height: 90.4vh;
+    height: fit-content;
+    width: fit-content;
+  }
 }

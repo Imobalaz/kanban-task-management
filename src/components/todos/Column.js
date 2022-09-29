@@ -11,8 +11,7 @@ const Column = () => {
       </div>
 
       <Todo />
-      <Todo />
-      <Todo />
+
     </div>
   );
 };

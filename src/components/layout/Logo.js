@@ -1,9 +1,11 @@
 import classes from './Logo.module.css'
 
-const Logo = () => {
+const Logo = (props) => {
+
+  const image = props.isPhone ? "logo-mobile.svg" : "logo-dark.svg";
     return (
-      <div className={`${classes.logo} ${classes.no_side_nav}`}>
-        <img src="logo-dark.svg" alt="logo" />
+      <div className={`${classes.logo}`}>
+        <img src={image} alt="logo" />
       </div>
     );
 }

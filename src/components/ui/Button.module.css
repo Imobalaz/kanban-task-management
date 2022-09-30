@@ -20,6 +20,10 @@
   background: var(--main-purple-hover);
 }
 
+.button.is_disabled {
+  background: #F2F2F2;
+}
+
 @media only screen and (max-width: 992px) {
   .button {
     font-size: 12px;

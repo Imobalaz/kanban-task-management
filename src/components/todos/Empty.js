@@ -2,6 +2,9 @@ import Button from "../ui/Button"
 import classes from './Empty.module.css'
 
 const Empty = () => {
+
+    
+
     return (
         <div className={classes.container}>
             <p>This board is empty. Create a new column to get started</p>

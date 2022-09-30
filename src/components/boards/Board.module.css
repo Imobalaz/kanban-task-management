@@ -4,6 +4,8 @@
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
   color: #828FA3;
+  display: block;
+  text-decoration: none;
 
 }
 
@@ -21,7 +23,7 @@
     color: var(--white);
 }
 
-.container:active {
+.container.active {
     background: #635FC7;
     color: #FFF
 

@@ -2,6 +2,7 @@ import classes from './SideNav.module.css'
 import AllBoards from '../boards/AllBoards';
 
 
+
 const SideNav = (props) => {
   return (
     <div className={`${classes.container} ${classes.hide}`}>

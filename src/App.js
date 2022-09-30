@@ -28,15 +28,11 @@ function App() {
 
   isPhone = width <= 600;
 
-  console.log(isPhone);
-
   useEffect(() => {
     if (isPhone) {
       setBackground("red");
     }
   }, [isPhone]);
-
-  console.log(width);
   return (
     <Fragment>
       {!isPhone && (

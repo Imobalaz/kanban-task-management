@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { AppProvider } from "./context/context-api";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
-
+import Card from "./components/ui/Card";
 import "./index.css";
 import App from "./App";
 
@@ -17,5 +17,6 @@ root.render(
       </Route>
     </Switch>
     </BrowserRouter>
+    <Card />
   </AppProvider>
 );

@@ -15,8 +15,8 @@ const Column = (props) => {
   const tasks = props.column.tasks;
   const numberOfItems = tasks.length;
 
-  const todos = tasks.map(task => <Todo key={task.title.toLowerCase().replace(' ', '-')} task={task} />)
 
+  const todos = tasks.map(task => <Todo key={task.title.toLowerCase().replace(' ', '-')} column={columnTitle} task={task} />)
 
 
   return (

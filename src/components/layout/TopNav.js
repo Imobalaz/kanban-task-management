@@ -25,7 +25,6 @@ const TopNav = () => {
   useEffect(() => {
     if(boards.length === 0 || !neededBoard.columns || neededBoard.columns.length === 0) {
       setBoardsIsEmpty(true)
-      console.log("here");
     } else {
       setBoardsIsEmpty(false)
     }

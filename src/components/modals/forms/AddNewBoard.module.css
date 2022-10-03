@@ -1,0 +1,52 @@
+.container {
+  width: 416px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.board_form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.board_form label {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: var(--mid-grey);
+  margin-bottom: 8px;
+}
+
+.all_columns {
+  margin-bottom: 24px;
+}
+
+.all_columns p {
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: var(--mid-grey)
+}
+
+.columns {
+  display: flex;
+  margin-bottom: 12px;
+  gap: 16px;
+  align-items: center;
+  margin-right: 0.3px;
+}

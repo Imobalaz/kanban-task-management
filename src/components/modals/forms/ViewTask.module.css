@@ -1,0 +1,147 @@
+.container {
+  width: 416px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+p {
+  margin-bottom: 8px !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: var(--mid-grey);
+}
+
+.description {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  color: var(--mid-grey);
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  background: var(--light-grey);
+  height: 40px;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkbox:hover {
+  background-color: var(--main-purple);
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--main-purple);
+}
+
+.checkbox label {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--black);
+}
+
+.checkbox.checked label {
+  text-decoration-line: line-through;
+  mix-blend-mode: normal;
+  opacity: 0.5;
+}
+
+.status {
+  position: relative;
+}
+
+.status .select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(130, 143, 163, 0.25);
+  border-radius: 4px;
+  height: 40px;
+  padding: 0 16px;
+  position: relative;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.status .select span {
+  position: absolute;
+  top: 50%;
+  right: 16.75px;
+  transform: translateY(-50%);
+}
+
+.status .select.active span {
+  transform: rotate(180deg) translateY(10px);
+}
+
+.status .select:hover,
+.status .select.active {
+  outline: none !important;
+  border: 1px solid var(--main-purple);
+  border-radius: 4px;
+}
+
+.status .options {
+  position: absolute;
+  width: 100%;
+  top: 73px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0px 10px 20px rgba(54, 78, 126, 0.25);
+  border-radius: 8px;
+  flex-direction: column;
+  gap: 8px;
+  display: none;
+}
+
+.status .options.active {
+  display: flex;
+}
+
+.status .options .option {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  color: #828fa3;
+}
+
+.status .options .option:hover {
+  background: var(--main-purple)
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 295px;
+  }
+}

@@ -1,34 +1,29 @@
 :root {
-  --main-purple: #635FC7;
-  --main-purple-hover: #A8A4FF;
+  --main-purple: #635fc7;
+  --main-purple-hover: #a8a4ff;
   --black: #000112;
-  --very-dark-grey: #20212C;
-  --dark-grey: #2B2C37;
-  --dark-lines: #3E3F4E;
-  --mid-grey: #828FA3;
-  --light-lines: #E4EBFA;
-  --light-grey: #F4F7FD;
-  --white: #FFFFFF;
-  --red: #EA5555;
-  --red-hover: #FF9898;
+  --very-dark-grey: #20212c;
+  --dark-grey: #2b2c37;
+  --dark-lines: #3e3f4e;
+  --mid-grey: #828fa3;
+  --light-lines: #e4ebfa;
+  --light-grey: #f4f7fd;
+  --white: #ffffff;
+  --red: #ea5555;
+  --red-hover: #ff9898;
 }
-
-
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Plus Jakarta Sans', serif;
+  font-family: "Plus Jakarta Sans", serif;
 }
 
 html {
-  font-family: 'Plus Jakarta Sans', serif;
-  
+  font-family: "Plus Jakarta Sans", serif;
 }
 
-body {
-}
 
 ::-webkit-scrollbar {
   display: none;
@@ -36,6 +31,27 @@ body {
 
 p {
   margin: 0;
+}
+
+input, textarea {
+  /* height: 5vh; */
+  height: 40px;
+  border: 1px solid rgba(130, 143, 163, 0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  padding-left: 16px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  color: #000112;
+}
+
+input:focus, input:hover, textarea:focus, textarea:hover {
+  outline: none !important;
+  border: 1px solid var(--main-purple);
+  border-radius: 4px;
 }
 
 #root {

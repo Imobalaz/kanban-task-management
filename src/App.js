@@ -11,9 +11,9 @@ import AppContext from "./context/context-api";
 function App() {
   const ctx = useContext(AppContext)
   const [width, setWidth] = useState();
-  const [background, setBackground] = useState("green");
+  const overlayState = ctx.overlayIsActive;
 
-
+  const containerStyle = `${classes.container} ${overlayState ? classes.overlayIsActive : ''}`
 
 
   useEffect(() => {
@@ -27,16 +27,10 @@ function App() {
   let isPhone = false;
 
   isPhone = width <= 600;
-
-  useEffect(() => {
-    if (isPhone) {
-      setBackground("red");
-    }
-  }, [isPhone]);
   return (
     <Fragment>
       {!isPhone && (
-        <>
+        <div className={containerStyle}>
           <Logo isPhone={isPhone} />
           <TopNav />
           <SideNav/>
@@ -51,7 +45,7 @@ function App() {
               </svg>
             </div>
           </div>
-        </>
+        </div>
       )}
       {isPhone && (
         <div className={classes.mobile}>

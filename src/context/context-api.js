@@ -1,10 +1,27 @@
 import React from "react";
+import { useState } from "react";
 import data from "../store/data";
+
+
+const {boards} = data;
+
 
 const AppContext = React.createContext({
   data: {},
   pickBackgroundColor: () => {},
-  colorArray: []
+  colorArray: [],
+  overlayIsActive: true,
+  activateOverlay: () => {},
+  deactivateOverlay: () => {},
+  overlayType: '',
+  setOverlayType: () => {},
+  boardName: '',
+  setBoardName: () => {},
+  task: {
+    columnName: '',
+    taskTitle: '',
+  },
+  setTask: () => {},
 });
 
 export const colorArray = [
@@ -17,7 +34,14 @@ export const colorArray = [
   "grey",
 ];
 
+let overlayIsActive;
+
+
 export const AppProvider = (props) => {
+  const [overlayIsActive, setOverlayIsActive] = useState(false)
+  const [overlayType, setOverlayType] = useState('')
+  const [boardName, setBoardName] = useState(boards[0].name)
+  const [task, setTask] = useState({})
   const pickBackgroundColor = (palette) => {
     const backgroundColorIndex = Math.floor(Math.random() * palette.length);
     const backgroundColor =
@@ -27,10 +51,27 @@ export const AppProvider = (props) => {
     palette.push(backgroundColor)
     return backgroundColor
   };
+
+  const activateOverlay = () => {
+    setOverlayIsActive(true)
+  }
+
+  const deactivateOverlay = () => {
+    setOverlayIsActive(false)
+  }
   const appContext = {
-    data: data,
-    pickBackgroundColor: pickBackgroundColor,
-    colorArray: colorArray,
+    data,
+    pickBackgroundColor,
+    colorArray,
+    overlayIsActive,
+    activateOverlay,
+    deactivateOverlay,
+    overlayType,
+    setOverlayType,
+    boardName,
+    setBoardName,
+    task,
+    setTask,
   };
   return (
     <AppContext.Provider value={appContext}>

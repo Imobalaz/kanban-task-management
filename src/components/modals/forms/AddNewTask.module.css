@@ -1,0 +1,118 @@
+.container {
+  width: 416px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.task_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.task_form label {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: var(--mid-grey);
+  margin-bottom: 8px;
+}
+
+.description textarea {
+  width: 100%;
+  height: 112px;
+  padding-top: 8px;
+}
+
+p {
+  margin-bottom: 8px !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: var(--mid-grey);
+}
+
+.subtasks {
+  display: flex;
+  margin-bottom: 12px;
+  gap: 16px;
+  align-items: center;
+  margin-right: 0.3px;
+}
+
+.status {
+  position: relative;
+}
+
+.status .select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(130, 143, 163, 0.25);
+  border-radius: 4px;
+  height: 40px;
+  padding: 0 16px;
+  position: relative;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.status .select span {
+  position: absolute;
+  top: 50%;
+  right: 16.75px;
+  transform: translateY(-50%);
+}
+
+.status .select.active span {
+  transform: rotate(180deg) translateY(10px);
+}
+
+.status .select:hover,
+.status .select.active {
+  outline: none !important;
+  border: 1px solid var(--main-purple);
+  border-radius: 4px;
+}
+
+.status .options {
+  position: absolute;
+  width: 100%;
+  top: 73px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0px 10px 20px rgba(54, 78, 126, 0.25);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status .options .option {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  color: #828fa3;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 295px
+  }
+}

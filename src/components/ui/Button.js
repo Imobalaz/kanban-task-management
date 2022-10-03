@@ -14,12 +14,30 @@ const Button = (props) => {
         }
     }, [props.isDisabled])
 
+    const isForm = props.isForm;
 
-    const style = `${classes.button} ${isDisabled ? classes.is_disabled : ""}`
+    const buttonColor = props.color;
+
+    
+
+    var addedButtonStyle;
+
+    if (buttonColor === "grey") {
+        addedButtonStyle = classes.grey
+    } else if (buttonColor === 'red') {
+        addedButtonStyle = classes.red
+    } else {
+        addedButtonStyle = ''
+    }
+
+
+    const style = `${classes.button} ${isDisabled ? classes.is_disabled : ""} ${isForm ? classes.form : ''} ${addedButtonStyle}`
 
     const buttonClickHandler = () => {
         console.log("This button is clicked");
+        console.log(addedButtonStyle);
     }
+
 
     return (
         <button className={style} onClick={buttonClickHandler} disabled={isDisabled}>{props.children}</button>

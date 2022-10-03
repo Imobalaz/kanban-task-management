@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+}
+
+.container.hide {
+  display: none;
+}
+
+.subcontainer {
+  background: var(--white);
+  z-index: 1000;
+  opacity: 1;
+  padding: 32px;
+  margin: 20px;
+  border-radius: 6px;
+}

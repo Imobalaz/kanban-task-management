@@ -386,10 +386,6 @@ const data = {
       ],
     },
     {
-      name: "Test",
-      
-    },
-    {
       name: "Roadmap",
       columns: [
         {
@@ -442,7 +438,7 @@ const data = {
         },
       ],
     },
-  ],  
+  ],
 };
 
 export default data;

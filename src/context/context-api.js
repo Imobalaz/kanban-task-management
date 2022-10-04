@@ -1,13 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import data from "../store/data";
+import dummyData from "../store/data";
 
 
-const {boards} = data;
+const {boards} = dummyData;
 
 
 const AppContext = React.createContext({
   data: {},
+  setData: () => {},
   pickBackgroundColor: () => {},
   colorArray: [],
   overlayIsActive: true,
@@ -38,6 +39,7 @@ let overlayIsActive;
 
 
 export const AppProvider = (props) => {
+  const [data, setData] = useState(dummyData)
   const [overlayIsActive, setOverlayIsActive] = useState(false)
   const [overlayType, setOverlayType] = useState('')
   const [boardName, setBoardName] = useState(boards[0].name)
@@ -56,11 +58,13 @@ export const AppProvider = (props) => {
     setOverlayIsActive(true)
   }
 
+
   const deactivateOverlay = () => {
     setOverlayIsActive(false)
   }
   const appContext = {
     data,
+    setData,
     pickBackgroundColor,
     colorArray,
     overlayIsActive,

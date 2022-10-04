@@ -12,6 +12,7 @@ const Board = (props) => {
   const slurredBoardName = props.title.toLowerCase().replace(" ", '-');
   const boardClickHandler = () => {
     ctx.setBoardName(props.title)
+    ctx.setMobileDrobdownIsActive(false);
   }
 
   return (

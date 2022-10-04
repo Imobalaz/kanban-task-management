@@ -10,6 +10,10 @@
   
 }
 
+.container.no_sidenav {
+  min-width: 100vw;
+}
+
 .container.dark {
   background: var(--very-dark-grey);
 }

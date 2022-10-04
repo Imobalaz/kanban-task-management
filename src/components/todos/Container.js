@@ -4,7 +4,6 @@ import Column from "./Column";
 import { useContext, useEffect } from "react";
 import AppContext from "../../context/context-api";
 import { useLocation, useHistory } from "react-router-dom";
-import data from "../../store/data";
 
 const Container = (props) => {
   const ctx = useContext(AppContext);
@@ -21,15 +20,13 @@ const Container = (props) => {
       history.replace(
         `?board=${boards[0].name.toLowerCase().replace(" ", "-")}`
       );
-
-      const boardName = queriedBoard
-        ? queriedBoard
-        : boards[0].name.toLowerCase().replace(" ", "-")
     }
-  }, []);
+  }, [boards, history, queriedBoard]);
+  const dark = ctx.isDark ? classes.dark : "";
+  const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
 
   if (boards.length === 0) {
-    return <div className={classes.container}></div>;
+    return <div className={`${classes.container} ${dark} ${noSidenav}`}></div>;
   }
 
   const [filteredBoard] = boards.filter(
@@ -38,9 +35,11 @@ const Container = (props) => {
 
   const neededBoard = filteredBoard ? filteredBoard : boards[0];
 
+  ctx.setBoardName(neededBoard.name)
+
   if (!neededBoard.columns || neededBoard.columns.length === 0) {
     return (
-      <div className={classes.container}>
+      <div className={`${classes.container} ${dark} ${noSidenav}`}>
         <Empty />
       </div>
     );
@@ -53,10 +52,10 @@ const Container = (props) => {
   ));
 
   return (
-    <div className={classes.container}>
+    <div className={`${classes.container} ${dark} ${noSidenav}`}>
       {columns}
 
-      <div className={classes.add_column}>+ New Column</div>
+      <div className={`${classes.add_column} ${dark}`}>+ New Column</div>
     </div>
   );
 };

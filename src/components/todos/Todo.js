@@ -13,6 +13,8 @@ const Todo = (props) => {
   const subtasks = task.subtasks;
   const totalLength = subtasks.length;
 
+  const dark = ctx.isDark ? classes.dark : "";
+
   const titleSlug = title.toLowerCase().replaceAll(" ", "-");
 
   const doneTasks = subtasks.filter((task) => task.isCompleted === true);
@@ -28,8 +30,11 @@ const Todo = (props) => {
   };
   return (
     <BrowserRouter>
-      <div className={classes.container} onClick={taskClickHandler}>
-        <div className={classes.title}>{title}</div>
+      <div
+        className={`${classes.container} ${dark}`}
+        onClick={taskClickHandler}
+      >
+        <div className={`${classes.title} ${dark}`}>{title}</div>
         <div
           className={classes.substacks}
         >{`${doneLength} of ${totalLength} substacks`}</div>

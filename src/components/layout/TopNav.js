@@ -8,6 +8,9 @@ const TopNav = () => {
   const ctx = useContext(AppContext);
   const location = useLocation();
 
+  const dark = ctx.isDark ? classes.dark : "";
+  const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
+
   const [boardsIsEmpty, setBoardsIsEmpty] = useState(true);
   const { boards } = ctx.data;
 
@@ -20,19 +23,21 @@ const TopNav = () => {
 
   const neededBoard = filteredBoard ? filteredBoard : boards[0];
 
-  
-
   useEffect(() => {
-    if(boards.length === 0 || !neededBoard.columns || neededBoard.columns.length === 0) {
-      setBoardsIsEmpty(true)
+    if (
+      boards.length === 0 ||
+      !neededBoard.columns ||
+      neededBoard.columns.length === 0
+    ) {
+      setBoardsIsEmpty(true);
     } else {
-      setBoardsIsEmpty(false)
+      setBoardsIsEmpty(false);
     }
   }, [neededBoard]);
   return (
-    <div className={`${classes.container}`}>
-      <div className={classes.subcontainer}>
-        <p>Platform Launch</p>
+    <div className={`${classes.container} ${noSidenav} ${dark}`}>
+      <div className={`${classes.subcontainer} ${dark}`}>
+        <p>{ctx.boardName}</p>
         <div className={classes.subcontainer_action}>
           <Button isDisabled={boardsIsEmpty}>+ Add New Task</Button>
           <span>

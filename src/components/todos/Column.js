@@ -23,7 +23,7 @@ const Column = (props) => {
     <div className={classes.container}>
       <div className={classes.column_title}>
         <span style={{ background: backgroundColor }}></span>
-        <p>{`${columnTitle} (${numberOfItems})`}</p>
+        <p>{`${columnTitle.toUpperCase()} (${numberOfItems})`}</p>
       </div>
 
       {todos}

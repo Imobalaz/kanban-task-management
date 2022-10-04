@@ -13,6 +13,10 @@
   z-index: 10;
 }
 
+.container.hide {
+  left: -1000px;
+}
+
 .container.dark {
   background: var(--dark-grey);
   border-color: var(--dark-lines);
@@ -34,6 +38,7 @@
   align-items: center;
   gap: 24px;
   padding: 14px 0 14px;
+  cursor: pointer;
 }
 
 .toggler.dark {
@@ -54,11 +59,8 @@
   background: #fff;
   position: absolute;
   top: 3px;
-  border-radius: 50%;
-}
-
-.toggle span {
   left: 3px;
+  border-radius: 50%;
 }
 
 .toggle.dark span {
@@ -69,6 +71,7 @@
 .hide_nav {
   margin-left: 31px;
   margin-top: 22px;
+  cursor: pointer;
 }
 
 .hide_nav p {
@@ -102,6 +105,7 @@
     padding-bottom: 16px;
     box-shadow: 0px 10px 20px rgba(54, 78, 126, 0.25);
     border-radius: 8px;
+    z-index: 1000;
   }
 
   .container.hide {

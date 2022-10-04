@@ -1,6 +1,5 @@
 .container {
-  min-width: 280px;
-  width: fit-content;
+  width: 280px;
 }
 
 .column_title {
@@ -25,5 +24,6 @@
   line-height: 15px;
   letter-spacing: 2.4000000953674316px;
   text-align: left;
+  margin-block-end: 0;
   color: #828FA3;
 }

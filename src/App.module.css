@@ -12,11 +12,11 @@
   height: 88.625vh;
 }
 
-.page.no_side_bar {
+.page.no_sidenav {
   margin-left: 0;
 }
 
-.display_sidebar {
+.display_sidenav {
   position: fixed;
   left: 0;
   bottom: 32px;
@@ -27,7 +27,7 @@
   justify-content: center;
   background-color: var(--main-purple);
   border-radius: 0px 100px 100px 0px;
-  display: none;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 992px) {
@@ -47,7 +47,9 @@
     min-height: 100vh;
     min-width: 100vw;
     padding-top: 9.6vh;
-    overflow: hidden;
+  }
+
+  .mobile.dropdownActive {
     position: fixed;
   }
 
@@ -66,6 +68,10 @@
     margin: 0;
   }
 
+  .mobile_nav.dark {
+    background-color: var(--dark-grey);
+  }
+
   .mobile_nav1, .mobile_nav2 {
     display: flex;
     gap: 16px;
@@ -78,6 +84,10 @@
     line-height: 23px;
     letter-spacing: 0px;
     text-align: left;
+  }
+
+  .platform_text.dark {
+    color: var(--white);
   }
 
   .platform_text span {

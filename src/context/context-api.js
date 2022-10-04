@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dummyData from "../store/data";
 
 
@@ -23,6 +23,13 @@ const AppContext = React.createContext({
     taskTitle: '',
   },
   setTask: () => {},
+  isDark: false,
+  setIsDark: () => {},
+  sidenavIsActive: true,
+  setSidenavIsActive: () => {},
+  isPhone: '',
+  mobileDropdownIsActive: '',
+  setMobileDrobdownIsActive: () => {},
 });
 
 export const colorArray = [
@@ -35,7 +42,6 @@ export const colorArray = [
   "grey",
 ];
 
-let overlayIsActive;
 
 
 export const AppProvider = (props) => {
@@ -44,6 +50,10 @@ export const AppProvider = (props) => {
   const [overlayType, setOverlayType] = useState('')
   const [boardName, setBoardName] = useState(boards[0].name)
   const [task, setTask] = useState({})
+  const [isDark, setIsDark] = useState(false);
+  const [sidenavIsActive, setSidenavIsActive] = useState(true)
+  const [mobileDropdownIsActive, setMobileDrobdownIsActive] = useState(false)
+  const [width, setWidth] = useState();
   const pickBackgroundColor = (palette) => {
     const backgroundColorIndex = Math.floor(Math.random() * palette.length);
     const backgroundColor =
@@ -54,10 +64,25 @@ export const AppProvider = (props) => {
     return backgroundColor
   };
 
+  console.log(boardName);
+
+  useEffect(() => {
+    const getWindowWidth = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", getWindowWidth);
+    getWindowWidth();
+  }, []);
+
+  let isPhone = false;
+
+  isPhone = width <= 600;
+
   const activateOverlay = () => {
     setOverlayIsActive(true)
   }
 
+    console.log(isDark);
 
   const deactivateOverlay = () => {
     setOverlayIsActive(false)
@@ -76,6 +101,13 @@ export const AppProvider = (props) => {
     setBoardName,
     task,
     setTask,
+    isDark,
+    setIsDark,
+    sidenavIsActive,
+    setSidenavIsActive,
+    isPhone,
+    mobileDropdownIsActive,
+    setMobileDrobdownIsActive,
   };
   return (
     <AppContext.Provider value={appContext}>

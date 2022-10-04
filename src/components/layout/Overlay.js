@@ -8,8 +8,12 @@ const Overlay = () => {
     const ctx = useContext(AppContext)
     
     const overlayClickHandler = () => {
-        if(ctx.overlayType == "view task") {
+        if(ctx.overlayType === "view task") {
             ctx.deactivateOverlay();
+        }
+
+        if(ctx.mobileDropdownIsActive) {
+            ctx.setMobileDrobdownIsActive(false);
         }
     }
 

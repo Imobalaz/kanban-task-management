@@ -3,57 +3,71 @@ import SideNav from "./components/layout/SideNav";
 import classes from "./App.module.css";
 import Container from "./components/todos/Container";
 import { Fragment } from "react";
-import { useState, useEffect } from "react";
 import Logo from "./components/layout/Logo";
 import { useContext } from "react";
 import AppContext from "./context/context-api";
+import Overlay from "./components/layout/Overlay";
 
 function App() {
-  const ctx = useContext(AppContext)
-  const [width, setWidth] = useState();
+  const ctx = useContext(AppContext);
   const overlayState = ctx.overlayIsActive;
 
-  const containerStyle = `${classes.container} ${overlayState ? classes.overlayIsActive : ''}`
+  const dark = ctx.isDark ? classes.dark : "";
+  const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
 
+  const containerStyle = `${classes.container} ${
+    overlayState ? classes.overlayIsActive : ""
+  }`;
 
-  useEffect(() => {
-    const getWindowWidth = () => {
-      setWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", getWindowWidth);
-    getWindowWidth();
-  }, []);
+  const showSidenavHandler = () => {
+    ctx.setSidenavIsActive(true);
+  }
 
-  let isPhone = false;
+  const toggleDropdownHandle = () => {
+    ctx.setMobileDrobdownIsActive(prev => !prev)
+  }
 
-  isPhone = width <= 600;
+  // useEffect(() => {
+  //   const getWindowWidth = () => {
+  //     setWidth(window.innerWidth);
+  //   };
+  //   window.addEventListener("resize", getWindowWidth);
+  //   getWindowWidth();
+  // }, []);
+
+  // let isPhone = false;
+
+  const isPhone = ctx.isPhone;
   return (
     <Fragment>
       {!isPhone && (
         <div className={containerStyle}>
           <Logo isPhone={isPhone} />
           <TopNav />
-          <SideNav/>
-          <div className={`${classes.page}`}>
+          <SideNav />
+          <div className={`${classes.page} ${noSidenav}`}>
             <Container />
-            <div className={classes.display_sidebar}>
+            {!ctx.sidenavIsActive && <div className={classes.display_sidenav} onClick={showSidenavHandler}>
               <svg width="16" height="11" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M15.815 4.434A9.055 9.055 0 0 0 8 0 9.055 9.055 0 0 0 .185 4.434a1.333 1.333 0 0 0 0 1.354A9.055 9.055 0 0 0 8 10.222c3.33 0 6.25-1.777 7.815-4.434a1.333 1.333 0 0 0 0-1.354ZM8 8.89A3.776 3.776 0 0 1 4.222 5.11 3.776 3.776 0 0 1 8 1.333a3.776 3.776 0 0 1 3.778 3.778A3.776 3.776 0 0 1 8 8.89Zm2.889-3.778a2.889 2.889 0 1 1-5.438-1.36 1.19 1.19 0 1 0 1.19-1.189H6.64a2.889 2.889 0 0 1 4.25 2.549Z"
                   fill="#FFF"
                 />
               </svg>
-            </div>
+            </div>}
           </div>
         </div>
       )}
       {isPhone && (
-        <div className={classes.mobile}>
-          <div className={classes.mobile_nav}>
+        <div className={`${classes.mobile} ${ctx.mobileDropdownIsActive ? classes.dropdownActive : ''}`}>
+          <div className={`${classes.mobile_nav} ${dark}`}>
             <div className={classes.mobile_nav1}>
               <Logo isPhone={isPhone} />
-              <div className={`${classes.platform_text} ${classes.active}`}>
-                Platform Launch{" "}
+              <div
+                className={`${classes.platform_text} ${dark} ${ctx.mobileDropdownIsActive ? classes.active : ''}`}
+                onClick={toggleDropdownHandle}
+              >
+                {ctx.boardName}
                 <span>
                   <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -87,7 +101,8 @@ function App() {
             </div>
           </div>
           <Container />
-          <SideNav isPhone={isPhone}/>
+          {ctx.mobileDropdownIsActive && <Overlay />}
+          {ctx.mobileDropdownIsActive && <SideNav isPhone={isPhone} />}
         </div>
       )}
     </Fragment>

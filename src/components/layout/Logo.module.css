@@ -13,7 +13,11 @@
   z-index: 10;
 }
 
-.logo.no_side_nav {
+.logo.dark {
+  background-color: var(--dark-grey);
+}
+
+.logo.no_sidenav {
   border-bottom: 1px solid var(--light-lines);
   padding-left: 24px;
   padding-right: 32px;
@@ -39,6 +43,7 @@
     height: 40%;
     position: relative;
   }
+  
 
   .logo img {
     width: 100%;

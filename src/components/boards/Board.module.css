@@ -23,8 +23,11 @@
     color: var(--white);
 }
 
+.container:hover p {
+  color: var(--white)
+}
+
 .container.active {
     background: #635FC7;
     color: #FFF
-
 }

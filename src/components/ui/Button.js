@@ -33,14 +33,10 @@ const Button = (props) => {
 
     const style = `${classes.button} ${isDisabled ? classes.is_disabled : ""} ${isForm ? classes.form : ''} ${addedButtonStyle}`
 
-    const buttonClickHandler = () => {
-        console.log("This button is clicked");
-        console.log(addedButtonStyle);
-    }
 
 
     return (
-        <button className={style} onClick={buttonClickHandler} disabled={isDisabled}>{props.children}</button>
+        <button className={style} onClick={props.onClick} disabled={isDisabled}>{props.children}</button>
     )
 }
 

@@ -30,6 +30,10 @@
   cursor: pointer;
 }
 
+.display_sidenav:hover {
+  background-color: var(--main-purple-hover);
+}
+
 @media only screen and (max-width: 992px) {
   .page {
     /*width: 34vw*/

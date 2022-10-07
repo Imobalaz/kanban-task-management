@@ -50,3 +50,14 @@
   align-items: center;
   margin-right: 0.3px;
 }
+
+.columns.empty input{
+  border: 1px solid var(--red)
+}
+
+.columns svg {
+  cursor: pointer;
+}
+.columns svg:hover g {
+  fill: red;
+}

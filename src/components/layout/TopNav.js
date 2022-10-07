@@ -31,9 +31,9 @@ const TopNav = () => {
     ) {
       setBoardsIsEmpty(true);
     } else {
-      setBoardsIsEmpty(false);
+      setBoardsIsEmpty(false);  
     }
-  }, [neededBoard]);
+  }, [neededBoard, boards.length]);
   return (
     <div className={`${classes.container} ${noSidenav} ${dark}`}>
       <div className={`${classes.subcontainer} ${dark}`}>

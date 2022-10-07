@@ -64,8 +64,6 @@ export const AppProvider = (props) => {
     return backgroundColor
   };
 
-  console.log(boardName);
-
   useEffect(() => {
     const getWindowWidth = () => {
       setWidth(window.innerWidth);
@@ -82,7 +80,6 @@ export const AppProvider = (props) => {
     setOverlayIsActive(true)
   }
 
-    console.log(isDark);
 
   const deactivateOverlay = () => {
     setOverlayIsActive(false)

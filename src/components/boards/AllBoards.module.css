@@ -12,6 +12,18 @@
 .add_board {
   color: var(--main-purple);
   padding: 14px 32px 15px;
+  cursor: pointer;
+  border-radius: 0px 100px 100px 0px;
+  margin-right: 24px
+}
+
+.add_board:hover {
+    background: var(--main-purple-hover);
+        color: var(--white);
+}
+
+.add_board:hover p {
+      color: var(--white);
 }
 
 .add_board p {
@@ -22,4 +34,6 @@
   line-height: 19px;
   letter-spacing: 0px;
   text-align: left;
+  color: var(--main-purple);
 }
+

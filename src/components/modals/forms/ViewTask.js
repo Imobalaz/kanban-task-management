@@ -6,6 +6,7 @@ const ViewTask = () => {
   const ctx = useContext(AppContext);
   const [columnToggle, setColumnToggle] = useState(false);
   const [buttonText, setButtonText] = useState(ctx.task.columnName);
+  const dark = ctx.isDark ? classes.dark : '';
 
   useEffect(() => {
     setButtonText(ctx.task.columnName);
@@ -48,7 +49,7 @@ const ViewTask = () => {
     return (
       <div
         key={subtask.title}
-        className={`${classes.checkbox} ${
+        className={`${classes.checkbox} ${dark} ${
           subtask.isCompleted ? classes.checked : ""
         }`}
         onClick={checkboxToggleHandler}
@@ -106,8 +107,8 @@ const ViewTask = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <div className={classes.title}>{neededTask.title}</div>
+    <div className={`${classes.container} ${dark}`}>
+      <div className={`${classes.title} ${dark}`}>{neededTask.title}</div>
 
       <div className={classes.description}>{neededTask.description}</div>
 
@@ -122,7 +123,7 @@ const ViewTask = () => {
         <p>Current Status</p>
 
         <button
-          className={`${classes.select} ${columnToggle ? classes.active : ""}`}
+          className={`${classes.select} ${dark} ${columnToggle ? classes.active : ""}`}
           onClick={columnToggleHandler}
         >
           {buttonText}
@@ -139,7 +140,7 @@ const ViewTask = () => {
         </button>
 
         <div
-          className={`${classes.options} ${columnToggle ? classes.active : ""}`}
+          className={`${classes.options} ${dark} ${columnToggle ? classes.active : ""}`}
         >
           {columns}
         </div>

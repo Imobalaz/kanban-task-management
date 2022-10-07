@@ -15,8 +15,12 @@ const SideNav = (props) => {
   const dark = ctx.isDark ? classes.dark : "";
   const hide = !ctx.sidenavIsActive ? classes.hide : "";
 
+  const sideNavClickHandler = () => {
+    ctx.setBoardDropdownIsActive(false)
+  }
+
   return (
-    <div className={`${classes.container} ${hide} ${dark}`}>
+    <div className={`${classes.container} ${hide} ${dark}`} onClick={sideNavClickHandler}>
       <div>
         <AllBoards />
       </div>

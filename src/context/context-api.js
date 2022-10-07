@@ -30,6 +30,8 @@ const AppContext = React.createContext({
   isPhone: '',
   mobileDropdownIsActive: '',
   setMobileDrobdownIsActive: () => {},
+  boardDropdownIsActive: false,
+  setBoardDropdownIsActive: () => {},
 });
 
 export const colorArray = [
@@ -54,6 +56,7 @@ export const AppProvider = (props) => {
   const [sidenavIsActive, setSidenavIsActive] = useState(true)
   const [mobileDropdownIsActive, setMobileDrobdownIsActive] = useState(false)
   const [width, setWidth] = useState();
+  const [boardDropdownIsActive, setBoardDropdownIsActive] = useState(false)
   const pickBackgroundColor = (palette) => {
     const backgroundColorIndex = Math.floor(Math.random() * palette.length);
     const backgroundColor =
@@ -105,6 +108,8 @@ export const AppProvider = (props) => {
     isPhone,
     mobileDropdownIsActive,
     setMobileDrobdownIsActive,
+    boardDropdownIsActive,
+    setBoardDropdownIsActive,
   };
   return (
     <AppContext.Provider value={appContext}>

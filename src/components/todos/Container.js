@@ -24,9 +24,12 @@ const Container = (props) => {
   }, [boards, history, queriedBoard]);
   const dark = ctx.isDark ? classes.dark : "";
   const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
+  const containerClickHandler = () => {
+    ctx.setBoardDropdownIsActive(false)
+  }
 
   if (boards.length === 0) {
-    return <div className={`${classes.container} ${dark} ${noSidenav}`}></div>;
+    return <div className={`${classes.container} ${dark} ${noSidenav}`} onClick={containerClickHandler}></div>;
   }
 
   const [filteredBoard] = boards.filter(
@@ -39,7 +42,10 @@ const Container = (props) => {
 
   if (!neededBoard.columns || neededBoard.columns.length === 0) {
     return (
-      <div className={`${classes.container} ${dark} ${noSidenav}`}>
+      <div
+        className={`${classes.container} ${dark} ${noSidenav}`}
+        onClick={containerClickHandler}
+      >
         <Empty />
       </div>
     );
@@ -52,7 +58,7 @@ const Container = (props) => {
   ));
 
   return (
-    <div className={`${classes.container} ${dark} ${noSidenav}`}>
+    <div className={`${classes.container} ${dark} ${noSidenav}`} onClick={containerClickHandler}>
       {columns}
 
       <div className={`${classes.add_column} ${dark}`}>+ New Column</div>

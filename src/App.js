@@ -27,15 +27,9 @@ function App() {
     ctx.setMobileDrobdownIsActive(prev => !prev)
   }
 
-  // useEffect(() => {
-  //   const getWindowWidth = () => {
-  //     setWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener("resize", getWindowWidth);
-  //   getWindowWidth();
-  // }, []);
-
-  // let isPhone = false;
+  const spanClickHandler = () => {
+    ctx.setBoardDropdownIsActive(prev => !prev)
+  }
 
   const isPhone = ctx.isPhone;
   return (
@@ -47,24 +41,35 @@ function App() {
           <SideNav />
           <div className={`${classes.page} ${noSidenav}`}>
             <Container />
-            {!ctx.sidenavIsActive && <div className={classes.display_sidenav} onClick={showSidenavHandler}>
-              <svg width="16" height="11" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.815 4.434A9.055 9.055 0 0 0 8 0 9.055 9.055 0 0 0 .185 4.434a1.333 1.333 0 0 0 0 1.354A9.055 9.055 0 0 0 8 10.222c3.33 0 6.25-1.777 7.815-4.434a1.333 1.333 0 0 0 0-1.354ZM8 8.89A3.776 3.776 0 0 1 4.222 5.11 3.776 3.776 0 0 1 8 1.333a3.776 3.776 0 0 1 3.778 3.778A3.776 3.776 0 0 1 8 8.89Zm2.889-3.778a2.889 2.889 0 1 1-5.438-1.36 1.19 1.19 0 1 0 1.19-1.189H6.64a2.889 2.889 0 0 1 4.25 2.549Z"
-                  fill="#FFF"
-                />
-              </svg>
-            </div>}
+            {!ctx.sidenavIsActive && (
+              <div
+                className={classes.display_sidenav}
+                onClick={showSidenavHandler}
+              >
+                <svg width="16" height="11" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.815 4.434A9.055 9.055 0 0 0 8 0 9.055 9.055 0 0 0 .185 4.434a1.333 1.333 0 0 0 0 1.354A9.055 9.055 0 0 0 8 10.222c3.33 0 6.25-1.777 7.815-4.434a1.333 1.333 0 0 0 0-1.354ZM8 8.89A3.776 3.776 0 0 1 4.222 5.11 3.776 3.776 0 0 1 8 1.333a3.776 3.776 0 0 1 3.778 3.778A3.776 3.776 0 0 1 8 8.89Zm2.889-3.778a2.889 2.889 0 1 1-5.438-1.36 1.19 1.19 0 1 0 1.19-1.189H6.64a2.889 2.889 0 0 1 4.25 2.549Z"
+                    fill="#FFF"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         </div>
       )}
       {isPhone && (
-        <div className={`${classes.mobile} ${ctx.mobileDropdownIsActive ? classes.dropdownActive : ''}`}>
+        <div
+          className={`${classes.mobile} ${
+            ctx.mobileDropdownIsActive ? classes.dropdownActive : ""
+          }`}
+        >
           <div className={`${classes.mobile_nav} ${dark}`}>
             <div className={classes.mobile_nav1}>
               <Logo isPhone={isPhone} />
               <div
-                className={`${classes.platform_text} ${dark} ${ctx.mobileDropdownIsActive ? classes.active : ''}`}
+                className={`${classes.platform_text} ${dark} ${
+                  ctx.mobileDropdownIsActive ? classes.active : ""
+                }`}
                 onClick={toggleDropdownHandle}
               >
                 {ctx.boardName}
@@ -89,7 +94,7 @@ function App() {
                   />
                 </svg>
               </button>
-              <div>
+              <div onClick={spanClickHandler}>
                 <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
                   <g fill="#828FA3" fill-rule="evenodd">
                     <circle cx="2.308" cy="2.308" r="2.308" />
@@ -100,6 +105,12 @@ function App() {
               </div>
             </div>
           </div>
+          {ctx.boardDropdownIsActive && (
+            <div className={classes.dropdown}>
+              <p>Edit Board</p>
+              <p className={classes.delete_board}>Delete Board</p>
+            </div>
+          )}
           <Container />
           {ctx.mobileDropdownIsActive && <Overlay />}
           {ctx.mobileDropdownIsActive && <SideNav isPhone={isPhone} />}

@@ -8,7 +8,7 @@ const Overlay = () => {
     const ctx = useContext(AppContext)
     
     const overlayClickHandler = () => {
-        if(ctx.overlayType === "view task" || ctx.overlayType === "add board") {
+        if(ctx.overlayType === "view task" || ctx.overlayType === "add board" || ctx.overlayType === "edit board") {
             ctx.deactivateOverlay();
         }
 

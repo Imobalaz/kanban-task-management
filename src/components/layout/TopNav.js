@@ -8,6 +8,11 @@ const TopNav = () => {
   const ctx = useContext(AppContext);
   const location = useLocation();
 
+  const editBoardHandler = () => {
+    ctx.activateOverlay();
+    ctx.setOverlayType("edit board");
+  }
+
   const dark = ctx.isDark ? classes.dark : "";
   const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
 
@@ -23,6 +28,11 @@ const TopNav = () => {
 
   const neededBoard = filteredBoard ? filteredBoard : boards[0];
 
+  const spanClickHandler = () => {
+    ctx.setBoardDropdownIsActive(prev => !prev)
+  }
+
+
   useEffect(() => {
     if (
       boards.length === 0 ||
@@ -36,11 +46,11 @@ const TopNav = () => {
   }, [neededBoard, boards.length]);
   return (
     <div className={`${classes.container} ${noSidenav} ${dark}`}>
-      <div className={`${classes.subcontainer} ${dark}`}>
+      <div className={`${classes.subcontainer} ${dark}`} >
         <p>{ctx.boardName}</p>
         <div className={classes.subcontainer_action}>
           <Button isDisabled={boardsIsEmpty}>+ Add New Task</Button>
-          <span>
+          <span className={classes.span} onClick={spanClickHandler}>
             <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
               <g fill="#828FA3" fill-rule="evenodd">
                 <circle cx="2.308" cy="2.308" r="2.308" />
@@ -51,6 +61,11 @@ const TopNav = () => {
           </span>
         </div>
       </div>
+
+      {ctx.boardDropdownIsActive && <div className={classes.dropdown}>
+        <p onClick={editBoardHandler}>Edit Board</p>
+        <p className={classes.delete_board}>Delete Board</p>
+      </div>}
     </div>
   );
 };

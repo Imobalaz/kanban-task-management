@@ -5,16 +5,21 @@
   gap: 24px;
 }
 
+
 .title {
   font-size: 18px;
   font-weight: 700;
   line-height: 23px;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   text-align: left;
 }
 
-p {
-  margin-bottom: 8px !important;
+.title.dark, .container.dark .subtasks p {
+  color: var(--white)
+}
+
+.subtasks p {
+  margin-bottom: 16px;
   font-size: 12px;
   font-weight: 700;
   line-height: 15px;
@@ -49,6 +54,10 @@ p {
   cursor: pointer;
 }
 
+.checkbox.dark {
+  background-color: var(--very-dark-grey);
+}
+
 .checkbox:hover {
   background-color: var(--main-purple);
 }
@@ -68,10 +77,15 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+
 .checkbox.checked label {
   text-decoration-line: line-through;
   mix-blend-mode: normal;
   opacity: 0.5;
+}
+
+.checkbox.dark label, .checkbox.checked.dark label {
+  color: var(--white);
 }
 
 .status {
@@ -80,7 +94,7 @@ input[type="checkbox"] {
 
 .status .select {
   width: 100%;
-  background: #ffffff;
+  background: transparent;
   border: 1px solid rgba(130, 143, 163, 0.25);
   border-radius: 4px;
   height: 40px;
@@ -93,6 +107,11 @@ input[type="checkbox"] {
   letter-spacing: 0px;
   text-align: left;
 }
+
+.select.dark {
+  color: var(--white);
+}
+
 
 .status .select span {
   position: absolute;
@@ -123,6 +142,10 @@ input[type="checkbox"] {
   flex-direction: column;
   gap: 8px;
   display: none;
+}
+
+.options.dark {
+  background-color: var(--very-dark-grey);
 }
 
 .status .options.active {

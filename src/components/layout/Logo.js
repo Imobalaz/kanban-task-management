@@ -9,8 +9,12 @@ const Logo = (props) => {
   const dark = ctx.isDark ? classes.dark : "";
   const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : '';
 
+  const clickHandler = () => {
+    ctx.setBoardDropdownIsActive(false)
+  }
+
   return (
-    <div className={`${classes.logo} ${dark} ${noSidenav}`}>
+    <div className={`${classes.logo} ${dark} ${noSidenav}`} onClick={clickHandler}>
       <img src={image} alt="logo" />
     </div>
   );

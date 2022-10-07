@@ -13,10 +13,18 @@
   margin-bottom: 24px;
 }
 
+.title.dark {
+  color: var(--white)
+}
+
 .board_form {
   display: flex;
   flex-direction: column;
   margin-bottom: 24px;
+}
+
+.board_form input {
+  background-color: transparent;
 }
 
 .board_form label {
@@ -61,3 +69,11 @@
 .columns svg:hover g {
   fill: red;
 }
+
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 295px;
+  }
+}
+

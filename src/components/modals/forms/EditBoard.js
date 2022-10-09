@@ -150,6 +150,34 @@ const EditBoard = () => {
     setInputHasErrorArray(inputHasErrorArrayCopy);
   };
 
+  const updateColumnInputs = (e, index) => {
+    const inputs = [...columnInputs];
+    inputs[index] = e.target.value;
+    setColumnInputs(inputs)
+  }
+
+  const looper = columnInputs.map((column, index) => {
+    
+    return (
+      <div
+        key={`column${index}`}
+        className={`${classes.columns} `}
+      >
+        <input type="text" value={ column } onChange={(e) => updateColumnInputs(e, index)}  />
+        <svg
+          width="15"
+          height="15"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g fill="#828FA3" fill-rule="evenodd">
+            <path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z" />
+            <path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z" />
+          </g>
+        </svg>
+      </div>
+    );
+  })
+
 
   const columnsInput = columnArray.map((column) => {
     const columnIndex = columnArray.findIndex((col) => col === column);
@@ -288,7 +316,8 @@ const EditBoard = () => {
       <div className={classes.all_columns}>
         <p>Columns</p>
 
-        {columnsInput}
+        {/* {columnsInput} */}
+        { looper}
 
         <Button isForm={true} color="grey" onClick={addBoardHandler}>
           + Add New Column

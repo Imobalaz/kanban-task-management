@@ -151,71 +151,15 @@ const EditBoard = () => {
   };
 
 
-  const columnsInput = columnArray.map((column) => {
-    const columnIndex = columnArray.findIndex((col) => col === column);
-
-    // const removeColumnInputHandler = () => {
-    //   const oldArray = columnInputs;
-    //   oldArray.splice(columnIndex, 1);
-    //   setColumnInputs(oldArray);
-
-    //   const oldInputsArray = inputIsEmpty;
-    //   oldInputsArray.splice(columnIndex, 1);
-    //   setInputIsEmpty(oldInputsArray);
-
-    //   const oldInputsTouchedArray = inputIsTouched;
-    //   oldInputsTouchedArray.splice(columnIndex, 1);
-    //   setInputIsTouched(oldInputsTouchedArray);
-
-    //   const oldInputHasError = inputHasErrorArray;
-    //   oldInputHasError.splice(columnIndex, 1);
-    //   setInputHasErrorArray(oldInputHasError);
-
-    //   const columnIsEmpty = emptyInputs.includes(+columnIndex);
-    //   if (columnIsEmpty) {
-    //     const newEmptyArray = emptyInputs;
-    //     newEmptyArray.splice(columnIndex, 1);
-    //     setColumnArray(newEmptyArray);
-    //   }
-    //   const newColumnArray = columnArray.filter((col) => col !== column);
-    //   setColumnArray(newColumnArray);
-    // };
-
-    // const inputChangeHandler = (event) => {
-    //   columnInputsCopy[columnIndex] = event.target.value;
-    //   setColumnInputs(columnInputsCopy);
-    //   emptyInputsHandler();
-    //   inputIsEmptyHandler();
-    //   inputHasErrorArrayCopy[columnIndex] =
-    //     inputIsEmptyCopy[columnIndex] && inputIsTouchedCopy[columnIndex];
-
-    //   setInputHasErrorArray(inputHasErrorArrayCopy);
-    // };
-
-    const inputChanger = (event) => {
-        console.log("hey");
-        console.log(event.target.value);
-        console.log(columnIndex);
-        inputChangeHandler(event.target.value, columnIndex)
-    }
-
-    // const blurHandler = () => {
-    //   inputIsTouchedCopy[columnIndex] = true;
-    //   setInputIsTouched(inputIsTouchedCopy);
-
-    //   inputHasErrorArrayCopy[columnIndex] =
-    //     inputIsEmpty[columnIndex] && inputIsTouched[columnIndex];
-    //   setInputHasErrorArray(inputHasErrorArrayCopy);
-    // };
-
+  const columnsInput = columnArray.map((column, index) => {
     return (
       <div
-        key={`column${column}`}
+        key={`column${index}`}
         className={`${classes.columns} ${
-          inputHasErrorArray[columnIndex] ? classes.empty : ""
+          inputHasErrorArray[index] ? classes.empty : ""
         }`}
       >
-        <input type="text" value={columnInputs[columnIndex] ? columnInputs[columnIndex] : ''} onChange={inputChanger} onBlur={() => blurHandler(columnIndex)} />
+        <input type="text" value={column} onChange={(e) => )} onBlur={() => blurHandler(columnIndex)} />
         <svg
           width="15"
           height="15"

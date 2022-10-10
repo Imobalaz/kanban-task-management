@@ -120,12 +120,12 @@ const EditBoard = () => {
   };
 
 
-  const inputChangeHandler = (value, columnIndex) => {
+  const inputChangeHandler = (event, columnIndex) => {
     console.log("hey hey");
-    console.log(value);
+    console.log(event.target.value);
     const columnInputsCopy = columnInputs;
     const inputHasErrorArrayCopy = inputHasErrorArray;
-    columnInputsCopy[columnIndex] = value;
+    columnInputsCopy[columnIndex] = event.target.value;
     setColumnInputs(columnInputsCopy);
     emptyInputsHandler();
     inputIsEmptyHandler();
@@ -151,7 +151,7 @@ const EditBoard = () => {
   };
 
 
-  const columnsInput = columnArray.map((column, index) => {
+  const columnsInput = columnInputs.map((column, index) => {
     return (
       <div
         key={`column${index}`}
@@ -159,12 +159,12 @@ const EditBoard = () => {
           inputHasErrorArray[index] ? classes.empty : ""
         }`}
       >
-        <input type="text" value={column} onChange={(e) => )} onBlur={() => blurHandler(columnIndex)} />
+        <input type="text" value={column} onChange={(e) => inputChangeHandler(e, index)} onBlur={() => blurHandler(index)} />
         <svg
           width="15"
           height="15"
           xmlns="http://www.w3.org/2000/svg"
-          onClick={() => removeColumnInputHandler(columnIndex)}
+          onClick={() => removeColumnInputHandler(index)}
         >
           <g fill="#828FA3" fill-rule="evenodd">
             <path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z" />

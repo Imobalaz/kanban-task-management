@@ -178,12 +178,13 @@ const AddNewBoard = () => {
 
 
       ctx.data.boards.push(newBoard)
+      ctx.setNeededBoard(newBoard);
       ctx.deactivateOverlay()
     }
   };
 
   return (
-    <div className={classes.container}>
+    <div className={`${classes.container} ${ctx.isDark ? classes.dark : ''}`}>
       <p className={classes.title}>Add New Board</p>
 
       <div class={`${classes.board_form}`}>
@@ -201,7 +202,7 @@ const AddNewBoard = () => {
 
         {columnsInput}
 
-        <Button isForm={true} color="grey" onClick={addBoardHandler}>
+        <Button isForm={true} color={ctx.isDark ? 'light' : 'grey'} onClick={addBoardHandler}>
           + Add New Column
         </Button>
       </div>

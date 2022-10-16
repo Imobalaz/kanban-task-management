@@ -26,6 +26,8 @@ const Button = (props) => {
         addedButtonStyle = classes.grey
     } else if (buttonColor === 'red') {
         addedButtonStyle = classes.red
+    } else if (buttonColor === 'light') {
+        addedButtonStyle = classes.light
     } else {
         addedButtonStyle = ''
     }

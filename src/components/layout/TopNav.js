@@ -9,8 +9,15 @@ const TopNav = () => {
   const location = useLocation();
 
   const editBoardHandler = () => {
+    ctx.setBoardDropdownIsActive(false)
     ctx.activateOverlay();
     ctx.setOverlayType("edit board");
+  }
+
+  const deleteBoardHandler = () => {
+    ctx.setBoardDropdownIsActive(false)
+    ctx.activateOverlay()
+    ctx.setOverlayType('delete board');
   }
 
   const dark = ctx.isDark ? classes.dark : "";
@@ -32,6 +39,10 @@ const TopNav = () => {
     ctx.setBoardDropdownIsActive(prev => !prev)
   }
 
+  const addNewTaskHandler = () => {
+    ctx.activateOverlay();  
+    ctx.setOverlayType("add task");
+  }
 
   useEffect(() => {
     if (
@@ -49,7 +60,7 @@ const TopNav = () => {
       <div className={`${classes.subcontainer} ${dark}`} >
         <p>{ctx.boardName}</p>
         <div className={classes.subcontainer_action}>
-          <Button isDisabled={boardsIsEmpty}>+ Add New Task</Button>
+          <Button isDisabled={boardsIsEmpty} onClick={addNewTaskHandler}>+ Add New Task</Button>
           <span className={classes.span} onClick={spanClickHandler}>
             <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
               <g fill="#828FA3" fill-rule="evenodd">
@@ -64,7 +75,7 @@ const TopNav = () => {
 
       {ctx.boardDropdownIsActive && <div className={classes.dropdown}>
         <p onClick={editBoardHandler}>Edit Board</p>
-        <p className={classes.delete_board}>Delete Board</p>
+        <p className={classes.delete_board} onClick={deleteBoardHandler}>Delete Board</p>
       </div>}
     </div>
   );

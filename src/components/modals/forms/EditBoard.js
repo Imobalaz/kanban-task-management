@@ -1,134 +1,140 @@
 import classes from "./AddNewBoard.module.css";
 import Button from "../../ui/Button";
-import { useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import AppContext from "../../../context/context-api";
-import { logDOM } from "@testing-library/react";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const EditBoard = () => {
-  const boardTitleRef = useRef();
+    const history = useHistory();
   const ctx = useContext(AppContext);
   const [wholeBoard] = ctx.data.boards.filter(
     (board) => board.name === ctx.boardName
   );
 
-  console.log(wholeBoard);
+  const boardIndex = ctx.data.boards.findIndex(
+    (board) => board.name === ctx.boardName
+  );
 
-  let initialColumnArray = []
-  let initialColumnInputs = []
-  if(wholeBoard.hasOwnProperty('columns')) {
+  let initialColumnArray = [];
+  let initialColumnInputs = [];
+  let initialColumnsIsTouched = [];
+  let initialInputHasErrorArray = [];
+  let initialInputIsEmpty = [];
+  if (wholeBoard && wholeBoard.hasOwnProperty("columns")) {
     for (const column in wholeBoard.columns) {
-        initialColumnArray.push(+column + 1)
-        initialColumnInputs.push(wholeBoard.columns[column].name)
+      initialColumnArray.push(+column + 1);
+      initialColumnInputs.push(wholeBoard.columns[column].name);
+      initialColumnsIsTouched.push(false);
+      initialInputHasErrorArray.push(false);
+      initialInputIsEmpty.push(false);
     }
   }
 
-  console.log(initialColumnArray);
-
-
   const [columnArray, setColumnArray] = useState(initialColumnArray);
   const [columnInputs, setColumnInputs] = useState(initialColumnInputs);
-  const [emptyInputs, setEmptyInputs] = useState([0]);
-  const [inputIsEmpty, setInputIsEmpty] = useState([true]);
-  const [inputIsTouched, setInputIsTouched] = useState([false]);
-  const [inputHasErrorArray, setInputHasErrorArray] = useState([false]);
-  const [boardName, setBoardName] = useState(ctx.boardName)
+  const [inputIsEmpty, setInputIsEmpty] = useState(initialInputIsEmpty);
+  const [inputIsTouched, setInputIsTouched] = useState(initialColumnsIsTouched);
+  const [inputHasErrorArray, setInputHasErrorArray] = useState(
+    initialInputHasErrorArray
+  );
+  const [boardName, setBoardName] = useState(ctx.boardName);
 
-  console.log(columnInputs);
-  const emptyInputsHandler = () => {
-    for (const index in columnInputs) {
-      if (columnInputs[index].trim().length === 0) {
-        const isInArray = emptyInputs.includes(+index);
-        if (!isInArray) {
-          setEmptyInputs((prev) => [...prev, +index]);
-        }
-      }
-    }
+  //   const emptyInputsHandler = () => {
+  //     for (const index in columnInputs) {
+  //       if (columnInputs[index].trim().length === 0) {
+  //         const isInArray = emptyInputs.includes(+index);
+  //         if (!isInArray) {
+  //           setEmptyInputs((prev) => [...prev, +index]);
+  //         }
+  //       }
+  //     }
 
-    for (const index in emptyInputs) {
-      if (columnInputs[emptyInputs[index]] && columnInputs[emptyInputs[index]].trim().length !== 0) {
-        const oldArray = emptyInputs;
-        oldArray.splice(index);
-        setEmptyInputs(oldArray);
-      }
-    }
+  //     for (const index in emptyInputs) {
+  //       if (
+  //         columnInputs[emptyInputs[index]] &&
+  //         columnInputs[emptyInputs[index]].trim().length > 0
+  //       ) {
+  //         const oldArray = emptyInputs;
+  //         oldArray.splice(index);
+  //         setEmptyInputs(oldArray);
+  //       }
+  //     }
 
-    for (const index in emptyInputs) {
-      if (emptyInputs[index] >= columnInputs.length) {
-        const oldArray = emptyInputs;
-        oldArray.splice(index, 1);
-        setEmptyInputs(oldArray);
-      }
-    }
-  };
+  //     for (const index in emptyInputs) {
+  //       if (emptyInputs[index] >= columnInputs.length) {
+  //         const oldArray = [...emptyInputs];
+  //         oldArray.splice(index, 1);
+  //         setEmptyInputs(oldArray);
+  //       }
+  //     }
+  //   };
 
-  const inputIsEmptyHandler = () => {
-    for (const column in columnsInput) {
-      if (columnInputs[column] && columnInputs[column].trim().length !== 0) {
-        const array = inputIsEmpty;
-        array[column] = false;
-        setInputIsEmpty(array);
-      } else {
-        const array = inputIsEmpty;
-        array[column] = true;
-        setInputIsEmpty(array);
-      }
-    }
-  };
+  useEffect(() => {
+    const array = columnInputs.map((input, index) => {
+      return columnInputs[index].trim().length > 0 ? false : true;
+    });
+    setInputIsEmpty(array);
+  }, [columnInputs]);
+
+  useEffect(() => {
+    const array = columnInputs.map((input, index) => {
+      return inputIsTouched[index] && inputIsEmpty[index];
+    });
+
+    setInputHasErrorArray(array);
+  }, [columnInputs, inputIsTouched, inputIsEmpty]);
 
   let nextElement = columnArray[columnArray.length - 1] + 1;
-
   nextElement = !nextElement ? 1 : nextElement;
 
   const addBoardHandler = () => {
     setColumnArray((prev) => [...prev, nextElement]);
     setColumnInputs((prev) => [...prev, ""]);
-    setEmptyInputs((prev) => [...prev, +columnArray.length]);
     setInputIsEmpty((prev) => [...prev, true]);
     setInputIsTouched((prev) => [...prev, false]);
     setInputHasErrorArray((prev) => [...prev, false]);
   };
 
   const removeColumnInputHandler = (columnIndex) => {
-    const oldArray = columnInputs;
+    const oldArray = [...columnInputs];
     oldArray.splice(columnIndex, 1);
     setColumnInputs(oldArray);
 
-    const array = columnArray;
-    array.splice(columnIndex, 1);
-    setColumnArray(array)
 
-    const oldInputsArray = inputIsEmpty;
+    const array = [...columnArray];
+    array.splice(columnIndex, 1);
+    setColumnArray(array);
+
+    const oldInputsArray = [...inputIsEmpty];
     oldInputsArray.splice(columnIndex, 1);
     setInputIsEmpty(oldInputsArray);
 
-    const oldInputsTouchedArray = inputIsTouched;
+    const oldInputsTouchedArray = [...inputIsTouched];
     oldInputsTouchedArray.splice(columnIndex, 1);
     setInputIsTouched(oldInputsTouchedArray);
 
-    const oldInputHasError = inputHasErrorArray;
+    const oldInputHasError = [...inputHasErrorArray];
     oldInputHasError.splice(columnIndex, 1);
     setInputHasErrorArray(oldInputHasError);
 
-    const columnIsEmpty = emptyInputs.includes(+columnIndex);
-    if (columnIsEmpty) {
-      const newEmptyArray = emptyInputs;
-      newEmptyArray.splice(columnIndex, 1);
-      setColumnArray(newEmptyArray);
-    }
-    const newColumnArray = columnArray.filter((col) => col !== columnInputs[columnIndex]);
-    setColumnArray(newColumnArray);
+    // const columnIsEmpty = emptyInputs.includes(+columnIndex);
+    // if (columnIsEmpty) {
+    //   const newEmptyArray = [...emptyInputs];
+    //   newEmptyArray.splice(columnIndex, 1);
+    //   setColumnArray(newEmptyArray);
+    // }
+    // const newColumnArray = columnArray.filter(
+    //   (col) => col !== columnInputs[columnIndex]
+    // );
+    // setColumnArray(newColumnArray);
   };
 
-
   const inputChangeHandler = (event, columnIndex) => {
-    console.log("hey hey");
-    console.log(event.target.value);
-    const columnInputsCopy = columnInputs;
-    const inputHasErrorArrayCopy = inputHasErrorArray;
+    const columnInputsCopy = [...columnInputs];
+    const inputHasErrorArrayCopy = [...inputHasErrorArray];
     columnInputsCopy[columnIndex] = event.target.value;
     setColumnInputs(columnInputsCopy);
-    emptyInputsHandler();
-    inputIsEmptyHandler();
     inputHasErrorArrayCopy[columnIndex] =
       inputIsEmpty[columnIndex] && inputIsTouched[columnIndex];
 
@@ -136,22 +142,17 @@ const EditBoard = () => {
   };
 
   const boardNameInputHandler = (event) => {
-    setBoardName(event.target.value)
-  } 
-
-  const blurHandler = (columnIndex) => {
-    const inputIsTouchedCopy = inputIsTouched;
-    const inputHasErrorArrayCopy = inputHasErrorArray;
-    inputIsTouchedCopy[columnIndex] = true;
-    setInputIsTouched(inputIsTouchedCopy);
-
-    inputHasErrorArrayCopy[columnIndex] =
-      inputIsEmpty[columnIndex] && inputIsTouched[columnIndex];
-    setInputHasErrorArray(inputHasErrorArrayCopy);
+    setBoardName(event.target.value);
   };
 
+  const blurHandler = (columnIndex) => {
+    const inputIsTouchedCopy = [...inputIsTouched];
+    inputIsTouchedCopy[columnIndex] = true;
+    setInputIsTouched(inputIsTouchedCopy);
+  };
 
   const columnsInput = columnInputs.map((column, index) => {
+    
     return (
       <div
         key={`column${index}`}
@@ -159,7 +160,12 @@ const EditBoard = () => {
           inputHasErrorArray[index] ? classes.empty : ""
         }`}
       >
-        <input type="text" value={column} onChange={(e) => inputChangeHandler(e, index)} onBlur={() => blurHandler(index)} />
+        <input
+          type="text"
+          value={column}
+          onChange={(e) => inputChangeHandler(e, index)}
+          onBlur={() => blurHandler(index)}
+        />
         <svg
           width="15"
           height="15"
@@ -176,46 +182,39 @@ const EditBoard = () => {
   });
 
   const formSubmitHandler = () => {
-    emptyInputsHandler();
-    inputIsEmptyHandler();
     const isAllBlur = [];
     for (const input in inputIsTouched) {
       isAllBlur.push(true);
     }
     setInputIsTouched(isAllBlur);
 
-    const inputErrorRevised = inputHasErrorArray;
-    for (const input in inputHasErrorArray) {
-      const value = inputIsEmpty[input] && isAllBlur[input];
-      inputErrorRevised[input] = value;
-    }
-    setInputHasErrorArray(inputErrorRevised);
-
-    let formIsValid = true;
+    let columnsAreValid = true;
 
     for (const input of inputHasErrorArray) {
-      formIsValid *= !input;
+      columnsAreValid *= !input;
     }
 
-    if (
-      formIsValid &&
-      boardTitleRef.current.value &&
-      boardTitleRef.current.value.trim()
-    ) {
-      const newBoard = {
-        name: boardTitleRef.current.value,
-        columns: columnInputs.map((column) => {
-          return { name: column, tasks: [] };
-        }),
+    const formIsValid = columnsAreValid && boardName.trim().length > 0;
+
+    if (formIsValid) {
+        const updatedColumns = columnInputs.map((input, index) => {
+            let tasks = [];
+            if (wholeBoard.columns[index] && wholeBoard.columns[index].hasOwnProperty('tasks')) {
+                tasks = wholeBoard.columns[index].tasks;
+            }
+
+            return {name: input, tasks: tasks}
+        })
+
+        const updatedBoard = {name: boardName, columns: updatedColumns}
+        ctx.data.boards[boardIndex] = updatedBoard;
+        ctx.deactivateOverlay();
+        history.push(`?board=${boardName.trim().replace(' ', '-').toLowerCase()}`)
       };
-
-      ctx.data.boards.push(newBoard);
-      ctx.deactivateOverlay();
     }
-  };
 
   return (
-    <div className={classes.container}>
+    <div className={`${classes.container} ${ctx.isDark ? classes.dark : ''}`}>
       <p className={classes.title}>Edit Board</p>
 
       <div class={`${classes.board_form}`}>
@@ -234,13 +233,13 @@ const EditBoard = () => {
 
         {columnsInput}
 
-        <Button isForm={true} color="grey" onClick={addBoardHandler}>
+        <Button isForm={true} color={ctx.isDark ? 'light' : 'grey'} onClick={addBoardHandler}>
           + Add New Column
         </Button>
       </div>
 
       <Button isForm={true} onClick={formSubmitHandler}>
-        Create New Board
+        Save Changes
       </Button>
     </div>
   );

@@ -30,6 +30,7 @@ const ViewTask = () => {
 
   const subtasks = allSubtasks.map((subtask) => {
     const checkboxToggleHandler = () => {
+      ctx.setTaskDropdownIsActive(false)
       const subtaskText = subtask.title;
       const oldSubtask = allSubtasks.find(
         (subtask) => subtask.title === subtaskText
@@ -103,9 +104,25 @@ const ViewTask = () => {
   });
 
   const columnToggleHandler = () => {
+    ctx.setTaskDropdownIsActive(false)
     setColumnToggle((prev) => !prev);
   };
 
+  const editTaskHandler = () => {
+    ctx.setTaskDropdownIsActive(false)
+    ctx.activateOverlay();
+    ctx.setOverlayType("edit task");
+  }
+
+  const deleteTaskHandler = () => {
+    ctx.setTaskDropdownIsActive(false)
+    ctx.activateOverlay();
+    ctx.setOverlayType('delete task')
+  }
+
+  const dropdownToggler = () => {
+    ctx.setTaskDropdownIsActive(prev => !prev);
+  }
   return (
     <div className={`${classes.container} ${dark}`}>
       <div className={`${classes.title} ${dark}`}>{neededTask.title}</div>
@@ -123,7 +140,9 @@ const ViewTask = () => {
         <p>Current Status</p>
 
         <button
-          className={`${classes.select} ${dark} ${columnToggle ? classes.active : ""}`}
+          className={`${classes.select} ${dark} ${
+            columnToggle ? classes.active : ""
+          }`}
           onClick={columnToggleHandler}
         >
           {buttonText}
@@ -140,11 +159,30 @@ const ViewTask = () => {
         </button>
 
         <div
-          className={`${classes.options} ${dark} ${columnToggle ? classes.active : ""}`}
+          className={`${classes.options} ${dark} ${
+            columnToggle ? classes.active : ""
+          }`}
         >
           {columns}
         </div>
       </div>
+
+      <div className={classes.vertical} onClick={dropdownToggler}>
+        <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
+          <g fill="#828FA3" fill-rule="evenodd">
+            <circle cx="2.308" cy="2.308" r="2.308" />
+            <circle cx="2.308" cy="10" r="2.308" />
+            <circle cx="2.308" cy="17.692" r="2.308" />
+          </g>
+        </svg>
+      </div>
+
+      {ctx.taskDropdownIsActive && <div className={classes.dropdown}>
+        <p onClick={editTaskHandler}>Edit Task</p>
+        <p className={classes.delete_board} onClick={deleteTaskHandler}>
+          Delete Task
+        </p>
+      </div>}
     </div>
   );
 };

@@ -20,6 +20,7 @@
 
 .add_column {
   margin-top: 39px;
+  cursor: pointer;
   background: linear-gradient(
     180deg,
     #e9effa 0%,

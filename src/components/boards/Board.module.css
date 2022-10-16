@@ -27,7 +27,21 @@
   color: var(--white)
 }
 
+.container.dark:hover p, .container.container.dark:hover svg {
+  color: var(--main-purple);
+}
+
+.container.dark:hover {
+  background: var(--white);
+
+}
+
+
 .container.active {
     background: #635FC7;
     color: #FFF
+}
+
+.container.active p, .container.active svg {
+  color: var(--white);
 }

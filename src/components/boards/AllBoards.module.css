@@ -17,6 +17,14 @@
   margin-right: 24px
 }
 
+.add_board.dark:hover {
+  background: var(--white);
+}
+
+.add_board.dark:hover p, .add_board.dark:hover svg {
+  color: var(--main-purple);
+}
+
 .add_board:hover {
     background: var(--main-purple-hover);
         color: var(--white);

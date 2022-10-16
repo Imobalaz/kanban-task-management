@@ -13,8 +13,8 @@
   margin-bottom: 24px;
 }
 
-.title.dark {
-  color: var(--white)
+.container.dark p {
+  color: var(--white);
 }
 
 .board_form {
@@ -27,6 +27,13 @@
   background-color: transparent;
 }
 
+.container.dark .board_form input {
+  background-color: var(--dark-grey);
+  color: var(--white);
+}
+
+
+
 .board_form label {
   font-size: 12px;
   font-weight: 700;
@@ -35,6 +42,10 @@
   text-align: left;
   color: var(--mid-grey);
   margin-bottom: 8px;
+}
+
+.container.dark .board_form label {
+  color: white;
 }
 
 .all_columns {
@@ -57,6 +68,11 @@
   gap: 16px;
   align-items: center;
   margin-right: 0.3px;
+}
+
+.container.dark .columns input {
+  background-color: var(--dark-grey);
+  color: white;
 }
 
 .columns.empty input{

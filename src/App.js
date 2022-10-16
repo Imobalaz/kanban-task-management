@@ -19,6 +19,18 @@ function App() {
     overlayState ? classes.overlayIsActive : ""
   }`;
 
+   const editBoardHandler = () => {
+     ctx.setBoardDropdownIsActive(false);
+     ctx.activateOverlay();
+     ctx.setOverlayType("edit board");
+   };
+
+     const deleteBoardHandler = () => {
+       ctx.setBoardDropdownIsActive(false);
+       ctx.activateOverlay();
+       ctx.setOverlayType("delete board");
+     }; 
+
   const showSidenavHandler = () => {
     ctx.setSidenavIsActive(true);
   }
@@ -31,6 +43,11 @@ function App() {
     ctx.setBoardDropdownIsActive(prev => !prev)
   }
 
+  const addTaskHandler = () => {
+    ctx.activateOverlay();
+    ctx.setOverlayType('add task')
+  }
+ 
   const isPhone = ctx.isPhone;
   return (
     <Fragment>
@@ -60,7 +77,7 @@ function App() {
       {isPhone && (
         <div
           className={`${classes.mobile} ${
-            ctx.mobileDropdownIsActive ? classes.dropdownActive : ""
+            ctx.mobileDropdownIsActive || ctx.overlayIsActive ? classes.dropdownActive : ""
           }`}
         >
           <div className={`${classes.mobile_nav} ${dark}`}>
@@ -86,7 +103,7 @@ function App() {
               </div>
             </div>
             <div className={classes.mobile_nav2}>
-              <button>
+              <button onClick={addTaskHandler}>
                 <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fill="#FFF"
@@ -106,9 +123,9 @@ function App() {
             </div>
           </div>
           {ctx.boardDropdownIsActive && (
-            <div className={classes.dropdown}>
-              <p>Edit Board</p>
-              <p className={classes.delete_board}>Delete Board</p>
+            <div className={`${classes.dropdown} ${ctx.isDark ? classes.dark : ''}`}>
+              <p onClick={editBoardHandler}>Edit Board</p>
+              <p className={classes.delete_board} onClick={deleteBoardHandler}>Delete Board</p>
             </div>
           )}
           <Container />

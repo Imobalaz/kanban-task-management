@@ -25,20 +25,28 @@ const Container = (props) => {
   const dark = ctx.isDark ? classes.dark : "";
   const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
   const containerClickHandler = () => {
-    ctx.setBoardDropdownIsActive(false)
-  }
+    ctx.setBoardDropdownIsActive(false);
+  };
 
   if (boards.length === 0) {
-    return <div className={`${classes.container} ${dark} ${noSidenav}`} onClick={containerClickHandler}></div>;
+    return (
+      <div
+        className={`${classes.container} ${dark} ${noSidenav}`}
+        onClick={containerClickHandler}
+      ></div>
+    );
   }
 
   const [filteredBoard] = boards.filter(
     (board) => board.name.toLowerCase().replace(" ", "-") === queriedBoard
   );
 
-  const neededBoard = filteredBoard ? filteredBoard : boards[0];
+  if (filteredBoard) {
+    ctx.setNeededBoard(filteredBoard)
+  }
+  const neededBoard = ctx.neededBoard;
 
-  ctx.setBoardName(neededBoard.name)
+  ctx.setBoardName(neededBoard.name);
 
   if (!neededBoard.columns || neededBoard.columns.length === 0) {
     return (
@@ -57,11 +65,25 @@ const Container = (props) => {
     <Column key={column.name} column={column} />
   ));
 
+  const editBoardHandler = () => {
+    ctx.setBoardDropdownIsActive(false);
+    ctx.activateOverlay();
+    ctx.setOverlayType("edit board");
+  };
+
   return (
-    <div className={`${classes.container} ${dark} ${noSidenav}`} onClick={containerClickHandler}>
+    <div
+      className={`${classes.container} ${dark} ${noSidenav}`}
+      onClick={containerClickHandler}
+    >
       {columns}
 
-      <div className={`${classes.add_column} ${dark}`}>+ New Column</div>
+      <div
+        className={`${classes.add_column} ${dark}`}
+        onClick={editBoardHandler}
+      >
+        + New Column
+      </div>
     </div>
   );
 };

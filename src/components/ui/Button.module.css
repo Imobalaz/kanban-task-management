@@ -46,6 +46,10 @@
 .button.form.red {
   background: var(--red)
 }
+.button.form.light {
+  background: var(--white);
+  color: var(--main-purple);
+}
 .button.form.red:hover {
   background: var(--red-hover);
 }

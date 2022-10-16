@@ -183,7 +183,8 @@ const EditBoard = () => {
 
   const formSubmitHandler = () => {
     const isAllBlur = [];
-    for (const input in inputIsTouched) {
+    let i = 0;
+    for (i; i<inputIsTouched.length; i++) {
       isAllBlur.push(true);
     }
     setInputIsTouched(isAllBlur);

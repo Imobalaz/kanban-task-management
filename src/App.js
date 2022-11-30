@@ -4,13 +4,26 @@ import classes from "./App.module.css";
 import Container from "./components/todos/Container";
 import { Fragment } from "react";
 import Logo from "./components/layout/Logo";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AppContext from "./context/context-api";
 import Overlay from "./components/layout/Overlay";
 
 function App() {
   const ctx = useContext(AppContext);
   const overlayState = ctx.overlayIsActive;
+
+  useEffect(() => {
+    if (ctx.user) {
+      const getBoards = async () => {
+        const boards = await ctx.getRequest(`users/${ctx.user}/boards`);
+        const boardData = boards.data.data;
+        ctx.setData(boardData);
+      };
+
+      getBoards();
+    }
+  }, [ctx.user]);
+
 
   const dark = ctx.isDark ? classes.dark : "";
   const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";

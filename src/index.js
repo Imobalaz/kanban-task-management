@@ -5,17 +5,17 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import Card from "./components/ui/Card";
 import "./index.css";
-import App from "./App";
+import Pages from "./Pages";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AppProvider>
     <BrowserRouter>
-    <Switch>
-      <Route path="">
-        <App />
-      </Route>
-    </Switch>
+      <Switch>
+        <Route path="">
+          <Pages />
+        </Route>
+      </Switch>
     </BrowserRouter>
     <Card />
   </AppProvider>

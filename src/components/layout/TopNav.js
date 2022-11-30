@@ -24,16 +24,16 @@ const TopNav = () => {
   const noSidenav = !ctx.sidenavIsActive ? classes.no_sidenav : "";
 
   const [boardsIsEmpty, setBoardsIsEmpty] = useState(true);
-  const { boards } = ctx.data;
+  const boards = ctx.data;
 
   const queryParam = new URLSearchParams(location.search);
   const queriedBoard = queryParam.get("board");
 
-  const [filteredBoard] = boards.filter(
+  const [filteredBoard] = boards.length ? boards.filter(
     (board) => board.name.toLowerCase().replace(" ", "-") === queriedBoard
-  );
+  ) : [];
 
-  const neededBoard = filteredBoard ? filteredBoard : boards[0];
+  const neededBoard = filteredBoard ? filteredBoard : boards ? boards[0] : [];
 
   const spanClickHandler = () => {
     ctx.setBoardDropdownIsActive(prev => !prev)

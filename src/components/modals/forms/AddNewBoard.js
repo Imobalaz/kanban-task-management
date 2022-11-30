@@ -1,16 +1,18 @@
 import classes from "./AddNewBoard.module.css";
 import Button from "../../ui/Button";
 import { useState, useRef, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import AppContext from "../../../context/context-api";
 
 const AddNewBoard = () => {
   const boardTitleRef = useRef();
-  const ctx = useContext(AppContext)
+  const history = useHistory();
+  const ctx = useContext(AppContext);
   const [columnArray, setColumnArray] = useState([1]);
   const [columnInputs, setColumnInputs] = useState([""]);
   const [emptyInputs, setEmptyInputs] = useState([0]);
   const [inputIsEmpty, setInputIsEmpty] = useState([true]);
-  const [inputIsTouched, setInputIsTouched] = useState([false])
+  const [inputIsTouched, setInputIsTouched] = useState([false]);
   const [inputHasErrorArray, setInputHasErrorArray] = useState([false]);
 
   const emptyInputsHandler = () => {
@@ -66,7 +68,6 @@ const AddNewBoard = () => {
     setInputIsTouched((prev) => [...prev, false]);
     setInputHasErrorArray((prev) => [...prev, false]);
   };
-  
 
   const columnsInput = columnArray.map((column) => {
     const columnIndex = columnArray.findIndex((col) => col === column);
@@ -83,7 +84,6 @@ const AddNewBoard = () => {
       const oldInputsArray = inputIsEmpty;
       oldInputsArray.splice(columnIndex, 1);
       setInputIsEmpty(oldInputsArray);
-
 
       const oldInputsTouchedArray = inputIsTouched;
       oldInputsTouchedArray.splice(columnIndex, 1);
@@ -113,24 +113,21 @@ const AddNewBoard = () => {
 
       setInputHasErrorArray(inputHasErrorArrayCopy);
     };
-    
-    
+
     const blurHandler = () => {
       inputIsTouchedCopy[columnIndex] = true;
-      setInputIsTouched(inputIsTouchedCopy)
+      setInputIsTouched(inputIsTouchedCopy);
 
       inputHasErrorArrayCopy[columnIndex] =
         inputIsEmpty[columnIndex] && inputIsTouched[columnIndex];
       setInputHasErrorArray(inputHasErrorArrayCopy);
-
-    }
-
+    };
 
     return (
       <div
         key={`column${column}`}
         className={`${classes.columns} ${
-        inputHasErrorArrayCopy[columnIndex] ? classes.empty : ""
+          inputHasErrorArrayCopy[columnIndex] ? classes.empty : ""
         }`}
       >
         <input type="text" onChange={inputChangeHandler} onBlur={blurHandler} />
@@ -149,15 +146,15 @@ const AddNewBoard = () => {
     );
   });
 
-  const formSubmitHandler = () => {
+  const formSubmitHandler = async () => {
     emptyInputsHandler();
     inputIsEmptyHandler();
     const isAllBlur = [];
     for (const input in inputIsTouched) {
-      isAllBlur.push(true)
+      isAllBlur.push(true);
     }
     setInputIsTouched(isAllBlur);
-    
+
     const inputErrorRevised = inputHasErrorArray;
     for (const input in inputHasErrorArray) {
       const value = inputIsEmpty[input] && isAllBlur[input];
@@ -171,20 +168,56 @@ const AddNewBoard = () => {
       formIsValid *= !input;
     }
 
-    if (formIsValid && boardTitleRef.current.value && boardTitleRef.current.value.trim()) {
-      const newBoard = {name: boardTitleRef.current.value, columns: columnInputs.map(column => {
-        return {name: column, tasks: []}
-      })}
+    if (
+      formIsValid &&
+      boardTitleRef.current.value &&
+      boardTitleRef.current.value.trim()
+    ) {
+      const newBoard = {
+        name: boardTitleRef.current.value,
+        columns: columnInputs.map((column) => {
+          return { name: column, tasks: [] };
+        }),
+      };
 
+      const requestBoard = await ctx.otherRequest(
+        `users/${ctx.user}/boards`,
+        "POST",
+        { name: boardTitleRef.current.value }
+      );
 
-      ctx.data.boards.push(newBoard)
-      ctx.setNeededBoard(newBoard);
-      ctx.deactivateOverlay()
+      console.log(requestBoard);
+
+      if (requestBoard.status === 201) {
+        const boardId = requestBoard.data.data.id;
+        newBoard.id = boardId;
+
+        for (const column of columnInputs) {
+          const sendColumn = await ctx.otherRequest(
+            `boards/${boardId}/columns`,
+            "POST",
+            { name: column }
+          );
+
+          if ((sendColumn.status = 201)) {
+            continue;
+          } else {
+            console.log("error");
+            return;
+          }
+        }
+
+        ctx.data.push(newBoard);
+        ctx.setNeededBoard(newBoard);
+        ctx.setCurrentBoardId(boardId)
+        history.replace( `profile?board=${boardId}`)
+        ctx.deactivateOverlay();
+      }
     }
   };
 
   return (
-    <div className={`${classes.container} ${ctx.isDark ? classes.dark : ''}`}>
+    <div className={`${classes.container} ${ctx.isDark ? classes.dark : ""}`}>
       <p className={classes.title}>Add New Board</p>
 
       <div class={`${classes.board_form}`}>
@@ -202,7 +235,11 @@ const AddNewBoard = () => {
 
         {columnsInput}
 
-        <Button isForm={true} color={ctx.isDark ? 'light' : 'grey'} onClick={addBoardHandler}>
+        <Button
+          isForm={true}
+          color={ctx.isDark ? "light" : "grey"}
+          onClick={addBoardHandler}
+        >
           + Add New Column
         </Button>
       </div>

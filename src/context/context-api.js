@@ -5,10 +5,29 @@ import dummyData from "../store/data";
 
 const {boards} = dummyData;
 
+let token = localStorage.getItem('userToken')
+
+
+const tokenExpiryDate = localStorage.getItem('tokenExpirationDate');
+
+const currentDate = new Date();
+const currentDateInMilliSeconds = currentDate.getTime();
+const remainingTimeBeforeExpiry = tokenExpiryDate - currentDateInMilliSeconds;
+
+
+if (remainingTimeBeforeExpiry <= 0) {
+  token = null;
+  localStorage.removeItem('userToken');
+  localStorage.removeItem('tokenExpirationDate')
+}
 
 const AppContext = React.createContext({
   data: {},
   setData: () => {},
+  user: null,
+  setUser: () => {},
+  userToken: null,
+  setUserToken: () => {},
   pickBackgroundColor: () => {},
   colorArray: [],
   overlayIsActive: true,
@@ -36,6 +55,10 @@ const AppContext = React.createContext({
   setTaskDropdownIsActive: () => {},
   neededBoard : {},
   setNeededBoard: () => {},
+  otherRequest: () => {},
+  getRequest: () => {},
+  currentBoardId: null,
+  setCurrentBoardId: () => {},
 
 });
 
@@ -57,7 +80,10 @@ if(boards[0] && boards[0].hasOwnProperty("name")) {
 
 
 export const AppProvider = (props) => {
-  const [data, setData] = useState(dummyData)
+  const [data, setData] = useState([]);
+  const [user, setUser] = useState(null);
+  const [currentBoardId, setCurrentBoardId] = useState(null)
+  const [userToken, setUserToken] = useState(token)
   const [overlayIsActive, setOverlayIsActive] = useState(false)
   const [overlayType, setOverlayType] = useState('')
   const [boardName, setBoardName] = useState(initialBoardName)
@@ -68,7 +94,10 @@ export const AppProvider = (props) => {
   const [width, setWidth] = useState();
   const [boardDropdownIsActive, setBoardDropdownIsActive] = useState(false)
   const [taskDropdownIsActive, setTaskDropdownIsActive] = useState(false)
-  const [neededBoard, setNeededBoard] = useState(data.boards[0]);
+  const [neededBoard, setNeededBoard] = useState(data.length ? data[0] : null);
+
+
+  
 
   const pickBackgroundColor = (palette) => {
     const backgroundColorIndex = Math.floor(Math.random() * palette.length);
@@ -79,6 +108,46 @@ export const AppProvider = (props) => {
     palette.push(backgroundColor)
     return backgroundColor
   };
+
+  const getRequest = async (api) => {
+    const response = await fetch("http://localhost:8000/api/" + api, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+
+    const data = await response.json();
+
+    return { data: data, status: response.status };
+  };
+  const otherRequest = async (api, type, payload = []) => {
+    const response = await fetch("http://localhost:8000/api/" + api, {
+      method: type,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    return { data: data, status: response.status };
+  };
+
+  useEffect(() => {
+    if (userToken) {
+      const getUser = async () => {
+        const response = await getRequest('user');
+        setUser(response.data.data.id);
+      }
+
+      getUser();
+    }
+  }, [userToken])
+
 
   useEffect(() => {
     const getWindowWidth = () => {
@@ -96,6 +165,8 @@ export const AppProvider = (props) => {
     setOverlayIsActive(true)
   }
 
+  
+
 
   const deactivateOverlay = () => {
     setOverlayIsActive(false)
@@ -104,6 +175,10 @@ export const AppProvider = (props) => {
   const appContext = {
     data,
     setData,
+    user,
+    setUser,
+    userToken,
+    setUserToken,
     pickBackgroundColor,
     colorArray,
     overlayIsActive,
@@ -113,6 +188,8 @@ export const AppProvider = (props) => {
     setOverlayType,
     boardName,
     setBoardName,
+    currentBoardId,
+    setCurrentBoardId,
     task,
     setTask,
     isDark,
@@ -128,6 +205,8 @@ export const AppProvider = (props) => {
     setTaskDropdownIsActive,
     neededBoard,
     setNeededBoard,
+    otherRequest,
+    getRequest,
   };
   return (
     <AppContext.Provider value={appContext}>

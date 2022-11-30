@@ -6,11 +6,12 @@ import AppContext from "../../context/context-api";
 
 const AllBoards = () => {
   const ctx = useContext(AppContext);
-  const { boards } = ctx.data;
+  const boards = ctx.data;
   const boardCount = boards.length;
-  const boardsComponents = boards.map((board) => (
-    <Board key={board.name} title={board.name} />
-  ));
+
+  const boardsComponents = boardCount ? boards.map((board) => (
+    <Board key={board.id} id={board.id} title={board.name} columns={board.columns} />
+  )) : '';
 
   const addBoardHandler = () => {
     ctx.activateOverlay();

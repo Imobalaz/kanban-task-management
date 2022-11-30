@@ -6,14 +6,15 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const EditBoard = () => {
-    const history = useHistory();
+  const history = useHistory();
   const ctx = useContext(AppContext);
-  const [wholeBoard] = ctx.data.boards.filter(
-    (board) => board.name === ctx.boardName
+  const boards = ctx.data;
+  const [wholeBoard] = boards.filter(
+    (board) => board.id === ctx.currentBoardId
   );
 
-  const boardIndex = ctx.data.boards.findIndex(
-    (board) => board.name === ctx.boardName
+  const boardIndex = boards.findIndex(
+    (board) => board.id === ctx.currentBoardId
   );
 
   let initialColumnArray = [];
@@ -24,7 +25,10 @@ const EditBoard = () => {
   if (wholeBoard && wholeBoard.hasOwnProperty("columns")) {
     for (const column in wholeBoard.columns) {
       initialColumnArray.push(+column + 1);
-      initialColumnInputs.push(wholeBoard.columns[column].name);
+      initialColumnInputs.push({
+        id: wholeBoard.columns[column].id,
+        name: wholeBoard.columns[column].name,
+      });
       initialColumnsIsTouched.push(false);
       initialInputHasErrorArray.push(false);
       initialInputIsEmpty.push(false);
@@ -39,6 +43,7 @@ const EditBoard = () => {
     initialInputHasErrorArray
   );
   const [boardName, setBoardName] = useState(ctx.boardName);
+  const [requestSuccessful, setrequestSuccessful] = useState(true);
 
   //   const emptyInputsHandler = () => {
   //     for (const index in columnInputs) {
@@ -71,14 +76,14 @@ const EditBoard = () => {
   //   };
 
   useEffect(() => {
-    const array = columnInputs.map((input, index) => {
-      return columnInputs[index].trim().length > 0 ? false : true;
+    const array = columnInputs.map((column, index) => {
+      return column.name.trim().length > 0 ? false : true;
     });
     setInputIsEmpty(array);
   }, [columnInputs]);
 
   useEffect(() => {
-    const array = columnInputs.map((input, index) => {
+    const array = columnInputs.map((column, index) => {
       return inputIsTouched[index] && inputIsEmpty[index];
     });
 
@@ -90,50 +95,68 @@ const EditBoard = () => {
 
   const addBoardHandler = () => {
     setColumnArray((prev) => [...prev, nextElement]);
-    setColumnInputs((prev) => [...prev, ""]);
+    setColumnInputs((prev) => [...prev, { id: null, name: "" }]);
     setInputIsEmpty((prev) => [...prev, true]);
     setInputIsTouched((prev) => [...prev, false]);
     setInputHasErrorArray((prev) => [...prev, false]);
   };
 
-  const removeColumnInputHandler = (columnIndex) => {
-    const oldArray = [...columnInputs];
-    oldArray.splice(columnIndex, 1);
-    setColumnInputs(oldArray);
+  const removeColumnInputHandler = async (columnIndex) => {
+    const columnId = columnInputs[columnIndex].id;
 
+    const removeColumn = () => {
+      const oldArray = [...columnInputs];
+      oldArray.splice(columnIndex, 1);
+      setColumnInputs(oldArray);
 
-    const array = [...columnArray];
-    array.splice(columnIndex, 1);
-    setColumnArray(array);
+      const array = [...columnArray];
+      array.splice(columnIndex, 1);
+      setColumnArray(array);
 
-    const oldInputsArray = [...inputIsEmpty];
-    oldInputsArray.splice(columnIndex, 1);
-    setInputIsEmpty(oldInputsArray);
+      const oldInputsArray = [...inputIsEmpty];
+      oldInputsArray.splice(columnIndex, 1);
+      setInputIsEmpty(oldInputsArray);
 
-    const oldInputsTouchedArray = [...inputIsTouched];
-    oldInputsTouchedArray.splice(columnIndex, 1);
-    setInputIsTouched(oldInputsTouchedArray);
+      const oldInputsTouchedArray = [...inputIsTouched];
+      oldInputsTouchedArray.splice(columnIndex, 1);
+      setInputIsTouched(oldInputsTouchedArray);
 
-    const oldInputHasError = [...inputHasErrorArray];
-    oldInputHasError.splice(columnIndex, 1);
-    setInputHasErrorArray(oldInputHasError);
+      const oldInputHasError = [...inputHasErrorArray];
+      oldInputHasError.splice(columnIndex, 1);
+      setInputHasErrorArray(oldInputHasError);
+    };
 
-    // const columnIsEmpty = emptyInputs.includes(+columnIndex);
-    // if (columnIsEmpty) {
-    //   const newEmptyArray = [...emptyInputs];
-    //   newEmptyArray.splice(columnIndex, 1);
-    //   setColumnArray(newEmptyArray);
-    // }
-    // const newColumnArray = columnArray.filter(
-    //   (col) => col !== columnInputs[columnIndex]
-    // );
-    // setColumnArray(newColumnArray);
+    if (columnId) {
+      const deleteColumnRequest = await ctx.otherRequest(
+        `columns/${columnId}`,
+        "DELETE"
+      );
+
+      if (deleteColumnRequest.status === 202) {
+        removeColumn();
+      }
+    } else {
+      removeColumn();
+    }
+
+    // // const columnIsEmpty = emptyInputs.includes(+columnIndex);
+    // // if (columnIsEmpty) {
+    // //   const newEmptyArray = [...emptyInputs];
+    // //   newEmptyArray.splice(columnIndex, 1);
+    // //   setColumnArray(newEmptyArray);
+    // // }
+    // // const newColumnArray = columnArray.filter(
+    // //   (col) => col !== columnInputs[columnIndex]
+    // // );
+    // // setColumnArray(newColumnArray);
   };
 
   const inputChangeHandler = (event, columnIndex) => {
     const columnInputsCopy = [...columnInputs];
     const inputHasErrorArrayCopy = [...inputHasErrorArray];
-    columnInputsCopy[columnIndex] = event.target.value;
+    const changedColumnElement = columnInputsCopy[columnIndex];
+    changedColumnElement.name = event.target.value;
+    columnInputsCopy[columnIndex] = changedColumnElement;
     setColumnInputs(columnInputsCopy);
     inputHasErrorArrayCopy[columnIndex] =
       inputIsEmpty[columnIndex] && inputIsTouched[columnIndex];
@@ -152,7 +175,6 @@ const EditBoard = () => {
   };
 
   const columnsInput = columnInputs.map((column, index) => {
-    
     return (
       <div
         key={`column${index}`}
@@ -162,7 +184,7 @@ const EditBoard = () => {
       >
         <input
           type="text"
-          value={column}
+          value={column.name}
           onChange={(e) => inputChangeHandler(e, index)}
           onBlur={() => blurHandler(index)}
         />
@@ -181,10 +203,10 @@ const EditBoard = () => {
     );
   });
 
-  const formSubmitHandler = () => {
+  const formSubmitHandler = async () => {
     const isAllBlur = [];
     let i = 0;
-    for (i; i<inputIsTouched.length; i++) {
+    for (i; i < inputIsTouched.length; i++) {
       isAllBlur.push(true);
     }
     setInputIsTouched(isAllBlur);
@@ -198,24 +220,78 @@ const EditBoard = () => {
     const formIsValid = columnsAreValid && boardName.trim().length > 0;
 
     if (formIsValid) {
-        const updatedColumns = columnInputs.map((input, index) => {
-            let tasks = [];
-            if (wholeBoard.columns[index] && wholeBoard.columns[index].hasOwnProperty('tasks')) {
-                tasks = wholeBoard.columns[index].tasks;
+      const updatedColumns = columnInputs.map((input, index) => {
+        let tasks = [];
+        if (
+          wholeBoard.columns[index] &&
+          wholeBoard.columns[index].hasOwnProperty("tasks")
+        ) {
+          tasks = wholeBoard.columns[index].tasks;
+        }
+
+        return { ...input, tasks: tasks };
+      });
+
+      if (boardName !== wholeBoard.name) {
+        const updateBoardRequest = await ctx.otherRequest(
+          `board/${wholeBoard.id}`,
+          "PUT",
+          { name: boardName }
+        );
+
+        if (updateBoardRequest !== 200) {
+          setrequestSuccessful(false);
+        }
+      }
+
+      for (const [index, column] of columnInputs.entries()) {
+        if (column.id) {
+          const originalColumn = wholeBoard.columns.find(
+            (prev) => prev.id === column.id
+          );
+          if (column.name !== originalColumn.name) {
+            const updateColumnRequest = await ctx.otherRequest(
+              `columns/${column.id}`,
+              "PUT",
+              { name: column.name }
+            );
+
+            if (updateColumnRequest !== 200) {
+              setrequestSuccessful(false);
             }
+          }
+        } else {
+          const storeColumnRequest = await ctx.otherRequest(
+            `boards/${wholeBoard.id}/columns`,
+            "POST",
+            { name: column.name }
+          );
+          if (storeColumnRequest.status === 201) {
+            const columnId = storeColumnRequest.data.data.id;
+            const newColumn = { id: columnId, name: column.name, tasks: [] };
+            updatedColumns[index] = newColumn;
+          } else {
+            setrequestSuccessful(false);
+          }
+        }
+      }
 
-            return {name: input, tasks: tasks}
-        })
-
-        const updatedBoard = {name: boardName, columns: updatedColumns}
-        ctx.data.boards[boardIndex] = updatedBoard;
+      if (requestSuccessful) {
+        const updatedBoard = {
+          id: wholeBoard.id,
+          name: boardName,
+          columns: updatedColumns,
+        };
+        boards[boardIndex] = updatedBoard;
+        ctx.setData(boards);
         ctx.deactivateOverlay();
-        history.push(`?board=${boardName.trim().replace(' ', '-').toLowerCase()}`)
-      };
+        history.push(`?board=${ctx.currentBoardId}`);
+      }
     }
+  };
 
   return (
-    <div className={`${classes.container} ${ctx.isDark ? classes.dark : ''}`}>
+    <div className={`${classes.container} ${ctx.isDark ? classes.dark : ""}`}>
       <p className={classes.title}>Edit Board</p>
 
       <div class={`${classes.board_form}`}>
@@ -234,7 +310,11 @@ const EditBoard = () => {
 
         {columnsInput}
 
-        <Button isForm={true} color={ctx.isDark ? 'light' : 'grey'} onClick={addBoardHandler}>
+        <Button
+          isForm={true}
+          color={ctx.isDark ? "light" : "grey"}
+          onClick={addBoardHandler}
+        >
           + Add New Column
         </Button>
       </div>

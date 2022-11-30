@@ -1,0 +1,46 @@
+.container {
+  background-color: #b77a1f;
+  min-height: 100vh;
+  position: relative;
+}
+
+.form {
+  background: var(--white);
+  opacity: 1;
+  padding: 32px;
+  border-radius: 6px;
+  width: 416px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.link {
+    align-self: center;
+}
+
+.link:hover {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.error_message {
+    color: red;
+    font-size: 13px;
+}
